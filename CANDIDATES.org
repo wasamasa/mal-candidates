@@ -1,0 +1,482 @@
+#+TODO: TODO INPROGRESS | DONE
+
+* Candidates
+
+** Sources for further languages
+
+- http://rosettacode.org/wiki/Category:Programming_Languages
+- https://github.com/mame/quine-relay
+- https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
+
+** Languages to implement MAL in [13/86]
+
+*** DONE Emacs Lisp
+
+That was pretty fun and educational.
+
+*** DONE ChucK
+
+A nice audio programming language, with a focus on time.  Incidentally
+it appears to have everything needed for implementing MAL in it...
+
+This is harder than expected as it's neither C++ nor Java and not many
+people seem to have explored the (buggy) non-audio parts.
+
+*** DONE Common Lisp
+
+A serious omission, given the existence of two Scheme (Racket, Guile)
+and a Clojure/ClojureScript implementation.
+
+edit: Done by one of my blog readers...
+
+*** DONE Powershell
+
+Open-source and running on Linux now!
+
+Considering that the original author of MAL did implement it in Bash,
+Powershell should be a piece of cake.
+
+Done by said author.
+
+*** DONE Picolisp
+
+Alex Burger is a pretty cool guy, so let's see how usable his creation
+is...
+
+*** DONE Smalltalk
+
+The other alternative to Emacs...  It inspired Ruby.
+
+https://github.com/dubek/mal/tree/smalltalk/smalltalk
+
+*** DONE TypeScript
+
+JavaScript with an actually useful type system.  Makes for better
+tooling?
+
+Done by someone else.
+
+*** DONE Elm
+
+Purely functional frontend dev with its own take on MVC.  Can be run
+from CLI and supports interop with JS, so it should be possible...
+
+Done by another curious person with higher pain tolerance than me.
+
+*** DONE REXX
+
+Looks like a Tcl/Smalltalk predecessor...
+
+Done by dubek.
+
+*** DONE Portable R7RS Scheme
+
+This should support all the required things (jiffies, command
+arguments, file IO, modules, etc.), for regex one can vendor irregex
+or just hand-roll a tokenizer.
+
+Done by me.
+
+*** DONE F#
+
+Microsoft has open-sourced tons of things, so that one becomes another
+possible Ocaml-like language.
+
+*** DONE Hy
+
+Clojure-like in Python
+
+Done by kanaka himself.
+
+*** DONE Skew
+
+http://skew-lang.org/
+
+Done by Dubek.
+
+*** TODO Pony
+
+The new cool kid on the block.  It appears to have a significantly
+advanced type system and compiler, as well as support for
+capability-based programming and actors.
+
+*** TODO Rebol / Red
+
+A language proposing DSLs as solution to everything with a syntax
+reminiscent of Tcl/Forth.
+
+*** TODO Self
+
+Looks like Smalltalk, but goes for prototypical OO.  It inspired Io
+(which already got an implementation).
+
+*** TODO eC / Ecere
+
+Like Tcl/Tk, it's mostly interesting due to its graphics support.  The
+language itself is reminiscent of C, but has some higher-level
+constructs, such as proper module support.  No exceptions or closures
+yet.
+
+http://ecere.org/tao.pdf
+
+*** TODO FORTRAN
+
+ORLY?
+
+*** TODO COBOL
+
+YARLY
+
+*** TODO BCPL
+
+C predecessor
+
+*** TODO x86 ASM
+
+Because you just hate yourself and deep down, machine code is untyped...
+
+WIP by https://github.com/bendudson/mal/tree/master/nasm
+
+*** TODO HLA
+
+Slightly better than x86 ASM, still untyped
+
+*** TODO PL/I
+
+RMS likes it!
+
+*** TODO SNOBOL / SPITBOL
+
+Made for string processing!
+
+*** TODO MUMPS
+
+Got its own series of The Daily WTF posts...
+
+*** TODO ALGOL
+
+Revolutionary programming features, syntax or whatever
+
+http://www.nunan.myzen.co.uk/algol68/pame.pdf
+https://jmvdveer.home.xs4all.nl/algol.html
+
+*** TODO MODULA-2/MODULA-3
+
+A more modern Pascal?
+
+*** TODO Pike
+
+I only know that Emacs supports it...
+
+*** TODO Dylan
+
+The other way Lisp could have evolved...
+
+*** TODO Squeak/Newsqueak
+
+Language used on Apple's Newton hardware.
+
+*** TODO J/K/APL/IDL
+
+Yay, array processing.  Somewhat Scheme-inspired.
+
+*** TODO Arc, Newlisp, Femtolisp
+
+Minimal Lisp dialects that may be different enough from the rest used already.
+
+*** TODO CHICKEN
+
+If Guile and Racket made it, why not CHICKEN, too?
+
+*** TODO Arrowlisp
+
+Purely symbolic Lisp, so no numbers...
+
+*** TODO Felix
+
+http://felix-lang.org/
+
+A powerful inliner compiling procedural/functional ML code to C++
+
+*** TODO Pure
+
+Another functional language, uses term rewriting heavily.
+
+http://purelang.bitbucket.org/
+
+*** TODO ATS
+
+Formal programming, yey.
+
+http://www.ats-lang.org/
+
+*** TODO Oz / Mozart
+
+Looks like forcer got paid writing code in it...
+
+*** TODO Mercury
+
+Real-world Prolog?
+
+*** TODO Icon
+
+"Icon is a very high-level programming language featuring goal
+directed execution and many facilities for managing strings and
+textual patterns."
+
+*** TODO Myrddin
+
+C with ADTs?
+
+http://eigenstate.org/myrddin/
+
+*** TODO Shadow
+
+...
+
+http://shadow-language.org/
+
+*** TODO SuperCollider
+
+The other alternative to ChucK.  Has first-class functions, feels more
+like a scripting language and is mostly undocumented.  Fun.
+
+*** TODO Luck
+
+C meets FP?
+
+https://luck.subarctic.org/
+
+*** TODO L.B. Stanza
+
+Not quite Lisp
+
+http://lbstanza.org/index.html
+
+*** TODO Sidef
+
+Pretty
+
+https://github.com/trizen/sidef
+
+*** TODO potion
+
+So that's what _why has been doing...
+
+https://github.com/perl11/potion/
+
+*** TODO m4
+
+Because TeX isn't insane enough
+
+*** TODO spry
+
+smalltalk and rebol on nim, woo
+
+*** TODO Solidity
+
+https://solidity.readthedocs.io/en/latest/
+
+Programming on the blockchain?  Crazy shit...
+
+*** TODO jq
+
+It might do it, once obstacles like arbitrary IO are sorted out
+
+*** TODO XSLT
+
+Welcome to the Turing tarpit!
+
+*** TODO Eiffel
+
+Contracts?
+
+*** TODO Standard ML
+
+The language that inspired Ocaml.  Not sure which implementation to
+pick, there's Mythril (which might be its own thing...), Moscow ML,
+Poly/ML, NJML, etc.
+
+*** TODO Yeti
+
+A ML on the JVM
+
+*** TODO Clay (2011)
+
+https://github.com/jckarter/clay
+
+System programming language with all the high-level constructs one
+wants?  Want.
+
+*** TODO Zig
+
+http://ziglang.org/
+
+Another too high-level looking system programming language.  Made by
+Mr. libsoundio
+
+*** TODO s-lang
+
+http://www.jedsoft.org/slang/doc/html/slang.html
+
+*** TODO Kernel
+
+vau, vau!
+
+*** TODO None
+
+https://bitbucket.org/duangle/nonelang/src
+
+Used in http://www.duangle.com/nowhere
+
+See also
+http://blog.duangle.com/2015/01/conspire-programming-environment-for.html
+and http://blog.duangle.com/2015/04/towards-realtime-deformable-worlds-why.html
+
+*** TODO Cobra
+
+http://cobra-language.com/
+
+*** TODO Whiley
+
+http://whiley.org/
+
+*** TODO Pliant
+
+http://www.fullpliant.org/
+
+*** TODO Ceylon, Gosu
+
+Sort of like Groovy as they run on the JVM
+
+*** TODO Boo, Nemerle
+
+CLR languages
+
+*** TODO Vala, Genie
+
+GNOME languages compiling to C using GLib
+
+*** TODO Reason, Bucklescript, Purescript
+
+https://github.com/facebook/reason
+
+Not ready yet, once it documents interop with npm or C...
+
+*** TODO wren, Lox
+
+http://wren.io/
+http://www.craftinginterpreters.com/
+
+Supports most you'd need, can be embedded (and extended?)
+
+*** TODO zygomys
+
+https://github.com/glycerine/zygomys
+
+*** TODO Pyret
+
+Most mature Racket language?
+
+*** TODO Zimbu
+
+The other creation of Vim's author
+
+http://www.zimbu.org/Home
+
+*** TODO Varnish/VCL, Asterisk (Dialplan)
+
+Embedded special purpose languages that are implemented and extensible
+in C.  The tricky part is figuring out how to speak to their
+interpreters from outside as Varnish is part of a web server setup and
+Asterisk is a SIP solution.
+
+*** TODO Monkey X
+
+Not to be confused with [[https://interpreterbook.com/][Monkey]].  Looks like a mixture of Basic and
+Haxe.
+
+*** TODO Gravity
+
+https://marcobambini.github.io/gravity/
+
+Yet another embedding language.
+
+*** TODO Fantom
+
+Better Java except it targets JVM/CLR/JS
+
+http://fantom.org/
+
+*** TODO Beta
+
+Old OOP language with minimal syntax
+
+http://cs.au.dk/~beta/doc/faq/beta-language-faq.html
+
+*** TODO Processing
+
+I thought this to be impossible, but
+https://github.com/zick/ProcessingLisp manages doing it.
+
+*** TODO E
+
+A language clearly ahead of its time.  The only implementation runs on
+Java, so interfacing with the outer world should be doable.
+
+http://www.erights.org/download/
+
+*** TODO Ioke
+
+Something Io-inspired, but different.
+
+https://ioke.org/
+
+*** TODO Squirrel
+
+This embedded language is nuts!  Just kidding, it looks simple, has
+closures and is dynamic.
+
+http://www.squirrel-lang.org/
+
+*** TODO Oberon
+
+The Oxford Oberon compiler might work
+
+*** TODO Euphoria
+
+Something sequences:
+
+http://www.rapideuphoria.com/
+
+*** TODO Falcon
+
+Allows every programming paradigm!!!
+
+http://www.falconpl.org/
+
+*** TODO Chapel
+
+This shit is cray: http://chapel.cray.com/
+
+*** TODO Joy
+
+A point-free, concatenative language
+
+*** TODO SPL
+
+Scripting language by the STFL author.  Seems to support everything
+you'd need, but careful, it's unmaintained!
+
+* Other stuff
+
+A logical continuation to MAL would be building a byte-code
+interpreter or simplistic compiler.
+
+Resources:
+
+- Structure and Interpretation of Computer Programs
+- Lisp in Small Pieces
+- Compiler Design in C
+- http://blog.felixangell.com/blog/virtual-machine-in-c
+- http://www.craftinginterpreters.com/ (incomplete)

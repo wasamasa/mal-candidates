@@ -1,0 +1,59 @@
+* Feature wish list for implementation candidates
+
+- Reading from stdin, printing to stdout and reading files
+- Accessing argv
+- Loading code from other files or better, a module system
+- Regex
+- An usable type system or dynamic typing
+- User-defined exceptions
+- Closures
+- Higher-order functions or at least function pointers (functors can
+  work, but are yucky)
+- Apply
+- Records/structs/objects
+- Numbers(!), arrays(!!), hash tables (can be faked with arrays)
+- Measuring time, alternatively shelling out
+- Linux support for the CI to work, alternatively Windows or OS X
+
+* Testing these features
+
+Create a directory for the language you wish to test and the following
+files, with =.qx= being the canonical file extension of the language:
+
+** =util.qx=
+
+Implement the following:
+
+- =(read-words prompt)= Prompt for words until encountering EOF,
+  return list
+- =(the-answer)= Calculate 42 in a convoluted way
+- =(make-greeter name)= Return a greeter function that returns a
+  personalized greeting
+- =(hostname)= Read =/etc/hostname= and return its contents
+- =(argv)= Return command-line arguments without the program name
+- =(fail-gracefully)= Throw and catch user-defined exceptions
+- =(splat op args)= Apply the operator to the list of arguments
+- =(tokenize input)= Tokenize parenthesized math (you may use regex)
+- =(keys dict)= Return keys of map
+- =(now)= Return a relative point in time in ms
+- =(rect size) (rect-size r) (rect-size-set! r)= OOP, alternatively do
+  the last one functionally and return a new rect with different size
+
+** =test.qx=
+
+- Import =util.qx= (relatively to =test.qx=)
+- Measure starting time
+- Test everything from =util.qx=
+- Measure end time
+- Print spent time
+
+** =run=
+
+- Execute =test.qx= from current and parent directory
+- Test with and without passed args
+
+** =Makefile=
+
+- Optional, intended for languages requiring a compilation step
+- May be used to auto-generate symlinks, configuration files and
+  whatnot

@@ -1,0 +1,22 @@
+var now, greeter, dict, rect;
+now = Util.now;
+dict = Dictionary.with(\a -> 1, \b -> 2);
+rect = Rect_(12);
+
+"Reading words...".postln;
+"Words: %\n".postf(Util.readWords("> "));
+"The answer: %\n".postf(Util.theAnswer);
+greeter = Util.makeGreeter("World");
+greeter.value;
+"Hostname: %\n".postf(Util.hostname);
+"ARGV: %\n".postf(Util.argv);
+"Error: %\n".postf(Util.failGracefully);
+"Sum: %\n".postf(Util.splat({ |a, b| a + b }, [1, 1]));
+"Tokens: %\n".postf(Util.tokenize("1 * (2 * 3) + 4"));
+"Keys: %\n".postf(Util.keys(dict));
+"Rect size: %\n".postf(rect.size);
+"Doubling rect size...".postln;
+rect.size_(rect.size * 2);
+"Rect size: %\n".postf(rect.size);
+"Elapsed time: %ms\n".postf(Util.now - now);
+exit(0);
