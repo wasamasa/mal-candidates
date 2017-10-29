@@ -8,7 +8,7 @@
 - https://github.com/mame/quine-relay
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [13/86]
+** Languages to implement MAL in [13/87]
 
 *** DONE Emacs Lisp
 
@@ -467,6 +467,17 @@ A point-free, concatenative language
 
 Scripting language by the STFL author.  Seems to support everything
 you'd need, but careful, it's unmaintained!
+
+*** TODO Coldfusion
+
+There's like three open-source implementations of it and it appears
+the language has been split into a PHP-like (templates) and JS-like
+(business logic) part.  You'll most likely have to look up
+documentation on the Adobe website.
+
+- OpenBD
+- Railo (dead)
+- Lucee (Railo Fork)
 
 * Other stuff
 
