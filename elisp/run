@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -ne "foo\nbar\nbaz\n" | exec emacs -Q --batch --load $(dirname $0)/test.el "${@}"
+echo -e "foo\nbar\nbaz" | exec emacs -Q --batch --load $(dirname $0)/test.el "${@}"

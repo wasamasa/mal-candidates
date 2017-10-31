@@ -1,3 +1,3 @@
 #!/bin/bash
 old_IFS="${IFS}"; IFS=$'\v'; export SC_ARGS="${*}"; IFS="${old_IFS}"
-echo -ne "foo\nbar\nbaz" | exec sclang -l $(dirname $0)/sclang_conf.yaml $(dirname $0)/test.sc
+echo -e "foo\nbar\nbaz" | exec sclang -l $(dirname $0)/sclang_conf.yaml $(dirname $0)/test.sc
