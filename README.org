@@ -10,6 +10,7 @@
 - Higher-order functions or at least function pointers (functors can
   work, but are yucky)
 - Apply
+- Extensible objects
 - Records/structs/objects
 - Numbers(!), arrays(!!), hash tables (can be faked with arrays)
 - Measuring time, alternatively shelling out
