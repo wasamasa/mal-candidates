@@ -5,7 +5,8 @@
 ** Sources for further languages
 
 - http://rosettacode.org/wiki/Category:Programming_Languages
-- https://github.com/mame/quine-relay
+- https://github.com/mame/quine-relay and
+  https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
 ** Languages to implement MAL in [13/87]
