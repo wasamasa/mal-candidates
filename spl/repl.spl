@@ -1,0 +1,44 @@
+load 'file';
+load 'environ';
+load 'readline';
+
+var history_file = environ.HOME ~ '/.mal_history';
+
+function is_blank(line) {
+    return line =~ /^\s*$/;
+}
+
+function load_history() {
+    try (ex) {
+        var content = file_read(history_file);
+        var lines = content =~ /[^\n]*/Ag;
+        foreach[] line (lines) {
+            if (!is_blank(line))
+                rl_add_history(line);
+        }
+    catch FileEx:
+        // ignore non-existing or unreadable file
+    }
+}
+
+function add_to_history(line) {
+    if (!is_blank(line)) {
+        rl_add_history(line);
+        file_append(history_file, line ~ '\n');
+    }
+}
+
+function repl(prompt) {
+    load_history();
+
+    while(1) {
+       var line = rl_readline(prompt);
+       if (not defined line)
+           break
+       write(line ~ '\n');
+       add_to_history(line);
+    }
+}
+
+repl('> ');
+write('\n');
