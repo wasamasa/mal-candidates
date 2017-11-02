@@ -1,0 +1,96 @@
+load 'array';
+load 'environ';
+load 'file';
+load 'system';
+
+function writeln(@args) {
+    write(array_join(args, '') ~ '\n');
+}
+
+function chomp(input) {
+    input =~ s/\n$//;
+    return input;
+}
+
+function ltrim(input) {
+    input =~ s/^\s*//;
+    return input;
+}
+
+function map(fn, array) {
+    var result = [];
+    foreach[] value (array)
+        push result, fn(value);
+    return result;
+}
+
+function read_words(prompt) {
+    var words = [];
+    var word;
+    while (1) {
+        word = read(prompt);
+        if (not defined word)
+            break;
+        push words, chomp(word);
+    }
+    return words;
+}
+
+function the_answer() {
+    return 2 + 5 * 8;
+}
+
+function make_greeter(target) {
+    return function() {
+        return 'Hello ' ~ target ~ '!\n';
+    };
+}
+
+function hostname() {
+    return chomp(file_read('/etc/hostname'));
+}
+
+function argv() {
+    return environ.SPL_ARGS =~ /[^\v]*/Ag;
+}
+
+object MyCustomException {
+    var description = "test";
+}
+
+function fail_gracefully() {
+    try (ex) {
+        throw new MyCustomException();
+    catch MyCustomException:
+        return ex.description;
+    }
+}
+
+function splat(op, args) {
+    return op(@args);
+}
+
+function tokenize(input) {
+    var tokens = input =~ /\s*([-()+*\/]|\d+)/Ag;
+    return map(ltrim, tokens);
+}
+
+function keys(dict) {
+    var result = [];
+    foreach key (dict)
+        push result, key;
+    return result;
+}
+
+object Rect {
+    var size;
+
+    method init(size) {
+        this.size = size;
+        return this;
+    }
+}
+
+function now() {
+    return #(system('date +%s%3N')) ./ 1000;
+}

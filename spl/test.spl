@@ -1,0 +1,24 @@
+load 'array';
+load 'util';
+
+var then = now();
+
+writeln('Reading words...');
+writeln('Words: ', array_join(read_words('> '), ', '));
+writeln('The answer: ', the_answer());
+var greeter = make_greeter('World');
+write(greeter());
+writeln('Hostname: ', hostname());
+writeln('ARGV: ', array_join(argv(), ', '));
+writeln('Error: ', fail_gracefully());
+function join(@args) { return array_join(args, ''); }
+writeln("splat(join, ['a', 'b', 'c']): ", splat(join, ['a', 'b', 'c']));
+writeln('Tokens: ', array_join(tokenize('1 * (2 * 3) + 4'), ', '));
+var dict = [ a: 1, b: 2 ];
+writeln('Keys: ', array_join(keys(dict), ', '));
+var r1 = new Rect(6);
+writeln('Rect r1 size: ', r1.size);
+writeln('Doubling rect size...');
+r1.size = r1.size * 2;
+writeln('Rect r1 size: ', r1.size);
+writeln(fmt('Elapsed time: %.2fms', now() - then));

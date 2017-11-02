@@ -1,0 +1,3 @@
+#!/bin/bash
+old_IFS="${IFS}"; IFS=$'\v'; export SPL_ARGS="${*}"; IFS="${old_IFS}"
+echo -e "foo\nbar\nbaz" | exec splrun -M $(dirname $0):$(spl-config --moddir) $(dirname $0)/test.spl
