@@ -29,7 +29,7 @@ argv: function [] [
 
 fail-gracefully: function [] [
     if error? err: try [
-        cause-error 'user 'type [arg1: "Test"]
+        make error! "Test"
     ] [
         err/arg1
     ]
