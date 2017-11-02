@@ -9,7 +9,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [13/87]
+** Languages to implement MAL in [13/88]
 
 *** DONE Emacs Lisp
 
@@ -479,6 +479,14 @@ documentation on the Adobe website.
 - OpenBD
 - Railo (dead)
 - Lucee (Railo Fork)
+
+There's also https://www.ortussolutions.com/products/commandbox
+
+*** TODO Nickle
+
+A not quite calculator language with C-style syntax.
+
+http://nickle.org/
 
 * Other stuff
 
