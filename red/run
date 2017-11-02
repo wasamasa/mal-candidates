@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -e "foo\nbar\nbaz\nq" | exec red $(dirname $0)/test.red "${@}"
+echo -e "foo\nbar\nbaz\nq" | red $(dirname $0)/test.red "${@}"

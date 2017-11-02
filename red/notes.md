@@ -1,3 +1,7 @@
+- EOF on user input returns "q", so the `run` script sends
+  `"foo\nbar\nbaz\nq"` instead
+- The `run` script does intentionally not use `exec` because that
+  yields an error: https://github.com/red/red/issues/2356#issuecomment-264748066
 - There is no closure support yet, unlike in REBOL
 - Read-only closures can be simulated by crafting a block (made simple
   by using the `compose` word)
