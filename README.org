@@ -15,6 +15,7 @@
 - Numbers(!), arrays(!!), hash tables (can be faked with arrays)
 - Measuring time, alternatively shelling out
 - Linux support for the CI to work, alternatively Windows or OS X
+- FFI or dynamically loadable modules to use GNU Readline
 
 * Hacks and workarounds for missing features
 
@@ -184,3 +185,7 @@ Implement the following:
 - Optional, intended for languages requiring a compilation step
 - May be used to auto-generate symlinks, configuration files and
   whatnot
+
+** =repl.qx=
+
+- Optional, used to show off a working readline interface
