@@ -1,4 +1,5 @@
 #+TODO: TODO INPROGRESS | DONE
+#+OPTIONS: todo:t
 
 * Candidates
 
