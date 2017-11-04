@@ -3,12 +3,11 @@ RM = rm -f
 
 all: mod_util.splb mod_readline.so
 
-mod_%.splb: %.spl
+mod_%.splb: mod_%.spl
 	splrun -N -x $@ $<
 
-mod_%.so: %.c
+mod_%.so: mod_%.c
 	$(CC) -shared -o $@ $<
 
 clean:
-	$(RM) mod_util.splb
-	$(RM) mod_readline.so
+	$(RM) mod_util.splb mod_readline.so

@@ -189,3 +189,7 @@ Implement the following:
 ** =repl.qx=
 
 - Optional, used to show off a working readline interface
+
+** =repl=
+
+- A shell script executing =repl.qx= or a binary built from =repl.qx=

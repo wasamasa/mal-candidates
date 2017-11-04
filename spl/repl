@@ -1,0 +1,2 @@
+#!/bin/bash
+exec splrun -M $(dirname $0):$(spl-config --moddir) $(dirname $0)/repl.spl

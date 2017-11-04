@@ -1,0 +1,2 @@
+#!/bin/bash
+exec newlisp $(dirname $0)/repl.lsp
