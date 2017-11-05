@@ -1,0 +1,2 @@
+#!/bin/bash
+echo -e "foo\nbar\nbaz" | SLSH_PATH=$(dirname $0) exec slsh -g $(dirname $0)/test.sl ${@}
