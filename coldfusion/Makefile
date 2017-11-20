@@ -1,6 +1,7 @@
 .PHONY: all clean
 
 RM = rm -f
+RMR = rm -rf
 
 all: box commandbox.properties
 
@@ -15,3 +16,4 @@ commandbox.properties:
 
 clean:
 	$(RM) box box.zip commandbox.properties
+	$(RMR) .commandbox

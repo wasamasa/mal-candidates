@@ -1,6 +1,6 @@
 .PHONY: all clean
 
-$(RM) = rm -f
+RM = rm -f
 
 all: readline-module.so
 
