@@ -1,5 +1,3 @@
-RM = rm -f
-
 .PHONY: all clean
 
 all: sclang_conf.yaml

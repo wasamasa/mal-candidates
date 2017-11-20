@@ -1,6 +1,5 @@
 .PHONY: all clean
 
-RM = rm -f
 RMR = rm -rf
 
 all: box commandbox.properties

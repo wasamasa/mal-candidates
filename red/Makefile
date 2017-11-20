@@ -1,7 +1,5 @@
 .PHONY: all clean
 
-RM = rm -f
-
 all: repl
 
 repl: repl.red
