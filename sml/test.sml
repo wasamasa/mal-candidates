@@ -1,10 +1,8 @@
-use "util";
-
 val start = now()
 val dict = [("a", 1), ("b", 2)]
 val r1 : rect = {size = 6}
 
-fun main() = (
+fun main () = (
   println "Reading words...";
   println ("Words: " ^ String.concatWith ", " (readWords "> "));
   println ("The answer: " ^ Int.toString (theAnswer ()));
