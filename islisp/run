@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export OPENLISP=$HOME/downloads/openlisp-10.3.0
+interpreter=${ISLISP:-uxlisp}
+
+imports=$(grep "^(import" test.lsp| cut -d'"' -f2)
+imports=$(for i in $imports; do ls $(dirname $0)/$i; done)
+
+program=$(mktemp)
+args=/tmp/islisp_args
+old_IFS="${IFS}"; IFS=$'\n'; echo "${*}" > $args; IFS=$old_IFS
+trap "rm -f $program $args" EXIT
+
+cat $imports test.lsp > $program
+echo -ne "foo\nbar\nbaz" | exec $interpreter $program
