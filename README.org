@@ -35,6 +35,8 @@
   variables, modify =run= so that it exports a =QX_ARGV= environment
   variable with all values joined by a separator (like NUL, bell,
   vertical tab, emoji, ...)
+- Alternatively, have =run= write ARGV with all values joined by a
+  separator to a file and read it from the program
 
 ** Loading code from other files
 
