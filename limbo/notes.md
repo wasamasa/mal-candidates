@@ -14,7 +14,9 @@
   collection, strings as value types, slices, etc.
 - While you have function references and can pass/return them, you
   cannot create anonymous functions (closures aren't a thing either)
-- Variadic functions are only allowed in built-in modules
+- There is syntax for variadic args (as seen in `sys.m`), but no way
+  to retrieve them, so in effect, only built-in modules have variadic
+  functions and there is no way to define your own
 - You must declare modules, much like in C, however duplicate
   declarations from multiple imports are considered an error
 - Import of modules is done at runtime which leads to the curious
