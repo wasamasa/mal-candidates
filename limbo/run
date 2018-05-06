@@ -1,0 +1,7 @@
+#!/bin/bash
+prefix=${INFERNO_PREFIX:-/usr/local/inferno}
+emu=$prefix/Linux/386/bin/emu
+mal="$(cd "$(dirname "$0")"; pwd -P)"
+echo -ne "foo\nbar\nbaz" > input
+cmdline="mkdir -p /mal; bind '#U*/$mal' /mal; /mal/test.dis ${@} < /mal/input"
+exec $emu /dis/sh.dis -c "$cmdline"
