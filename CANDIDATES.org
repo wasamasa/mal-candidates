@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [14/101]
+** Languages to implement MAL in [14/104]
 
 *** DONE Emacs Lisp
 
@@ -555,6 +555,27 @@ https://ooc-lang.org/
 *** TODO Odin
 
 https://github.com/odin-lang/Odin
+
+*** TODO Frege / Eta
+
+JVM Haskell
+
+*** TODO Nu
+
+A Lisp for Mac people.  It may be possible to run on Linux thanks to
+GNUStep: https://github.com/nulang/nu/blob/master/ubuntu.sh
+
+*** TODO Lily
+
+Statically typed language with an interpreter
+
+https://github.com/FascinatedBox/lily
+
+*** TODO Terra
+
+For those who found Lua too high-level
+
+https://github.com/zdevito/terra
 
 * Other stuff
 
