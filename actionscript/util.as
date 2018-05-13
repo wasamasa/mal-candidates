@@ -40,7 +40,7 @@ package {
             return input;
         }
 
-        public static function readWords(prompt:String):String {
+        public static function readWords(prompt:String):Array {
             var word:String;
             var words:Array = new Array();
             while ((word = readln(prompt)) != null) {
