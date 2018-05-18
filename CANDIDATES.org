@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [14/104]
+** Languages to implement MAL in [14/105]
 
 *** DONE Emacs Lisp
 
@@ -576,6 +576,15 @@ https://github.com/FascinatedBox/lily
 For those who found Lua too high-level
 
 https://github.com/zdevito/terra
+
+*** TODO Neko
+
+Not quite low-level language for NekoVM.  Seems to have most things
+you'd need, including FFI to measure time accurately and use GNU
+Readline.  It's intended as a compilation target (as done by the Haxe
+implementation), but it should be possible to write it by hand.
+
+https://nekovm.org/
 
 * Other stuff
 
