@@ -1,0 +1,28 @@
+(libload "libc/libc")
+(mod-load (or (find-shared-library "libreadline.so")
+              "/usr/lib/i386-linux-gnu/libreadline.so"))
+
+(de _readline (prompt)
+  ((-str-) prompt)
+  (cpheader "#include <stdio.h>")
+  (cpheader "#include <readline/readline.h>")
+  (cpheader "#include <readline/history.h>")
+  (gptr #{ readline((const char*) ($prompt->data)) #}))
+
+(de readline (prompt)
+  (let ((ptr (_readline prompt)))
+    (when ptr
+      (ptr-str ptr))))
+
+(de _add-history (line)
+  ((-str-) line)
+  #{ add_history ((const char*) ($line->data)) #}
+  ;; void isn't translated to nil
+  ;; nil isn't recognized as return value
+  0)
+
+(de add-history (line)
+  (_add-history line)
+  nil)
+
+(dhc-make () _readline _add-history)

@@ -1,0 +1,26 @@
+(libload "./readline")
+
+(defvar history-file
+  (concat-fname (getenv "HOME") "/.mal_history"))
+
+(de load-history ()
+  (let ((fd (open-read history-file)))
+    (when fd
+      (each ((line (read-lines fd)))
+        (add-history line)))))
+
+(de add-to-history (line)
+  (when (not (regex-match " *" line))
+    (add-history line)
+    (writing (open-append history-file)
+      (printf "%s\n" line))))
+
+(de repl (prompt)
+  (load-history)
+  (let ((input nil))
+    (while (setq input (readline prompt))
+      (printf "%s\n" input)
+      (add-to-history input))
+    (printf "\n")))
+
+(repl "> ")

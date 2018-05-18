@@ -1,0 +1,25 @@
+(libload "util")
+
+(defvar then (_now))
+
+(defvar dict (htable))
+(dict 'a 1)
+(dict 'b 1)
+
+(defvar r1 (new rect 6))
+
+(printf "Reading words...\n")
+(printf "Words: %l\n" (read-words "> "))
+(printf "The answer: %d\n" (the-answer))
+((make-greeter "World"))
+(printf "Hostname: %s\n" (hostname))
+(printf "ARGV: %l\n" (_argv))
+;; no way to catch errors
+(printf "Sum: %d\n" (splat + '(1 2 3 4)))
+(printf "Tokens: %l\n" (tokenize "1 * (2 * 3) + 4"))
+(printf "Keys: %l\n" (keys dict))
+(printf "Rect r1 size: %d\n" :r1:size)
+(printf "Doubling rect size...")
+(setq :r1:size (* :r1:size 2))
+(printf "Rect r1 size: %d\n" :r1:size)
+(printf "Elapsed time: %.2fms\n" (- (_now) then))

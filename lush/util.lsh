@@ -1,0 +1,50 @@
+(libload "readline")
+
+(de read-words (prompt)
+  (let ((words nil)
+        (word nil))
+    (while (setq word (readline prompt))
+      (setq words (cons word words)))
+    (reverse words)))
+
+(de the-answer ()
+  (+ 13 14 15))
+
+;; this emulates read-only closures
+(dmd make-greeter (target)
+  `(lambda ()
+     (printf "Hello %s!\n" ,target)))
+
+(de hostname ()
+  (reading "/etc/hostname"
+    (read-string)))
+
+(de _argv ()
+  (cdr argv))
+
+(de splat (op args)
+  (apply op args))
+
+(de tokenize (input)
+  (let ((tokens nil)
+        (re " *([0-9]+|[-()+*/])")
+        (i 0)
+        (match nil))
+    (while (and (< i (len input))
+                (setq match (regex-seek re input i)))
+      (let ((token (apply mid (cons input match))))
+        (setq tokens (cons (stripl token) tokens))
+        (setq i (apply + match))))
+    (reverse tokens)))
+
+(de keys (dict)
+  (htable-keys dict))
+
+(defclass rect object
+  size)
+
+(defmethod rect rect (arg)
+  (setq size arg))
+
+(de _now ()
+  (time))
