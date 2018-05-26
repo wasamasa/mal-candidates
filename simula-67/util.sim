@@ -1,0 +1,201 @@
+REAL PROCEDURE Now();
+Now := ClockTime * 1000;
+
+CLASS CELL;
+BEGIN
+   REF(CELL) ar, dr;
+END;
+
+REF(CELL) PROCEDURE Car(c); REF(CELL) c;
+Car :- c.ar;
+
+REF(CELL) PROCEDURE Cdr(c); REF(CELL) c;
+Cdr :- c.dr;
+
+REF(CELL) PROCEDURE Cons(ar, dr); REF(CELL) ar, dr;
+BEGIN REF(CELL) c;
+   c :- NEW CELL;
+   c.ar :- ar;
+   c.dr :- dr;
+   Cons :- c;
+END;
+
+BOOLEAN PROCEDURE Null(c); REF(CELL) c;
+Null := c.dr == NONE;
+
+BOOLEAN PROCEDURE Pair(c); REF(CELL) c;
+Pair := c.dr =/= NONE;
+
+PROCEDURE OutTextList(c); REF(CELL) c;
+BEGIN BOOLEAN printsp;
+   printsp := FALSE;
+   OutText("(");
+   WHILE Pair(c) DO BEGIN
+         IF printsp THEN OutText(" ");
+         OutText("""");
+         OutText((Car(c) QUA TEXTREF).Val);
+         OutText("""");
+         c :- Cdr(c);
+         printsp := TRUE;
+      END;
+   OutText(")");
+END;
+
+REF(CELL) PROCEDURE Reverse(c); REF(CELL) c;
+BEGIN REF(CELL) result;
+   result :- Cons(NONE, NONE);
+   WHILE Pair(c) DO BEGIN
+         result :- Cons(Car(c), result);
+         c :- Cdr(c);
+      END;
+   Reverse :- result;
+END;
+
+CELL CLASS TEXTREF;
+BEGIN
+   TEXT Val;
+END;
+
+REF(TEXTREF) PROCEDURE MakeText(val); TEXT val;
+BEGIN REF(TEXTREF) t;
+   t :- NEW TEXTREF;
+   t.Val :- val;
+   MakeText :- t;
+END;
+
+CHARACTER PROCEDURE CharAt(input, i); TEXT input; INTEGER i;
+BEGIN CHARACTER c; INTEGER oldpos;
+   IF i > input.Length THEN Error("Out of range");
+   input.SetPos(i);
+   CharAt := input.GetChar;
+END;
+
+BOOLEAN PROCEDURE Eofp(input); TEXT input;
+BEGIN
+   Eofp := (input.Length > 0) AND (CharAt(input, input.Length) = '!4!')
+END;
+
+TEXT PROCEDURE Chomp(input); TEXT input;
+BEGIN
+   IF (input =/= "" AND THEN CharAt(input, input.Length) = '!10!') THEN
+      Chomp :- input.Sub(1, input.Length - 1)
+   ELSE
+      Chomp :- input;
+END;
+
+EXTERNAL C PROCEDURE gnu_readline IS
+   TEXT PROCEDURE gnu_readline(prompt); TEXT prompt;;
+
+TEXT PROCEDURE Readline(prompt); TEXT prompt;
+BEGIN TEXT buf;
+   buf:- gnu_readline(prompt);
+   Readline :- IF Eofp(buf) THEN "" ELSE buf;
+END;
+
+REF(CELL) PROCEDURE ReadWords(prompt); TEXT prompt;
+BEGIN BOOLEAN done; TEXT word; REF(CELL) result;
+   result :- Cons(NONE, NONE);
+   WHILE NOT done DO BEGIN
+         word :- Readline(prompt);
+         IF word = "" THEN
+            done := TRUE
+         ELSE
+            result :- Cons(MakeText(Chomp(word)), result);
+      END;
+   ReadWords :- Reverse(result);
+END;
+
+INTEGER PROCEDURE TheAnswer;
+TheAnswer := 2 * 3 * (3 + 4);
+
+TEXT PROCEDURE Hostname;
+BEGIN TEXT buffer; REF(InByteFile) f;
+   f :- NEW InByteFile("/etc/hostname");
+   f.Open;
+   buffer :- Blanks(f.bytesize);
+   f.InText(buffer);
+   f.Close;
+   Hostname :- Chomp(buffer);
+END;
+
+EXTERNAL C PROCEDURE get_arg IS
+   TEXT PROCEDURE get_arg(ptr, i); INTEGER ptr, i;;
+
+TEXT PROCEDURE GetArg(i); INTEGER i;
+BEGIN
+   IF i >= Argc THEN Error("Index out of bounds");
+   GetArg :- get_arg(Argv, i);
+END;
+
+REF(CELL) PROCEDURE Argv_;
+BEGIN INTEGER i; REF(CELL) result;
+   result :- Cons(NONE, NONE);
+   FOR i := 1 STEP 1 UNTIL Argc - 1 DO
+      result :- Cons(MakeText(GetArg(i)), result);
+   Argv_ :- Reverse(result);
+END;
+
+BOOLEAN PROCEDURE Space(c); CHARACTER c;
+Space := c = ' ';
+
+BOOLEAN PROCEDURE Special(c); CHARACTER c;
+Special := c = '(' OR c = ')' OR c = '+' OR c = '-' OR c = '*' OR c = '/';
+
+INTEGER PROCEDURE ReadSpaces(input, i); TEXT input; INTEGER i;
+BEGIN
+   OutText("S"); OutImage;
+   WHILE i <= input.Length AND THEN Space(CharAt(input, i)) DO i := i + 1;
+   ReadSpaces := i;
+END;
+
+INTEGER PROCEDURE ReadDigits(input, i); TEXT input; INTEGER i;
+BEGIN
+   OutText("D"); OutImage;
+   WHILE i <= input.Length AND THEN Digit(CharAt(input, i)) DO i := i + 1;
+   ReadDigits := i;
+END;
+
+INTEGER PROCEDURE ReadSpecial(input, i); TEXT input; INTEGER i;
+BEGIN
+   OutText("X"); OutImage;
+   ReadSpecial := i + 1;
+END;
+
+REF(CELL) PROCEDURE Tokenize(input); TEXT input;
+BEGIN REF(cell) result; INTEGER i, beg; CHARACTER c; TEXT token;
+   result :- Cons(NONE, NONE);
+   i := 1;
+   WHILE i <= input.Length DO BEGIN
+         c := CharAt(input, i);
+         IF Space(c) THEN i := ReadSpaces(input, i)
+         ELSE IF Digit(c) THEN BEGIN
+               beg := i;
+               i := ReadDigits(input, i);
+               token :- input.Sub(beg, i - beg);
+               result :- Cons(MakeText(token), result);
+            END
+         ELSE IF Special(c) THEN BEGIN
+               beg := i;
+               i := ReadSpecial(input, i);
+               token :- input.Sub(beg, i - beg);
+               result :- Cons(MakeText(token), result);
+            END
+         ELSE Error("Unknown character");
+      END;
+   Tokenize :- Reverse(result);
+END;
+
+REF(CELL) PROCEDURE Keys(alist); REF(CELL) alist;
+BEGIN REF(CELL) result;
+   result :- Cons(NONE, NONE);
+   WHILE Pair(alist) DO BEGIN
+         result :- Cons(Car(Car(alist)), result);
+         alist :- Cdr(alist);
+      END;
+   Keys :- Reverse(result);
+END;
+
+CLASS RECT;
+BEGIN
+   INTEGER Size;
+END;

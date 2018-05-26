@@ -1,0 +1,52 @@
+EXTERNAL CLASS Util;
+BEGIN
+   REAL then_;
+   REF(CELL) dict;
+   REF(RECT) r1;
+   then_ := Now;
+   dict :- Cons(NONE, NONE);
+   dict :- Cons(Cons(MakeText("b"), MakeText("2")), dict);
+   dict :- Cons(Cons(MakeText("a"), MakeText("1")), dict);
+   r1 :- NEW RECT;
+   r1.size := 6;
+
+   OutText(Chomp(""));
+   OutImage;
+
+   OutText("Reading words...");
+   OutImage;
+   OutText("Words: ");
+   OutTextList(ReadWords("> "));
+   OutImage;
+   OutText("The answer: ");
+   OutInt(TheAnswer, 0);
+   OutImage;
+   COMMENT no function types or closures;
+   OutText("Hostname: ");
+   OutText(Hostname);
+   OutImage;
+   OutText("ARGV: ");
+   OutTextList(Argv_);
+   OutImage;
+   COMMENT no try/catch construct;
+   COMMENT no apply;
+   OutText("Tokens: ");
+   OutTextList(Tokenize("1 * (2 * 3) + 4"));
+   OutImage;
+   OutText("Keys: ");
+   OutTextList(Keys(dict));
+   OutImage;
+   OutText("Rect r1 size: ");
+   OutInt(r1.size, 0);
+   OutImage;
+   OutText("Doubling r1 size...");
+   OutImage;
+   r1.Size := r1.Size * 2;
+   OutText("Rect r1 size: ");
+   OutInt(r1.Size, 0);
+   OutImage;
+   OutText("Elapsed time: ");
+   OutFix(Now - then_, 2, 0);
+   OutText("ms");
+   OutImage;
+END
