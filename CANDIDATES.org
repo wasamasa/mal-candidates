@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [14/105]
+** Languages to implement MAL in [15/105]
 
 *** DONE Emacs Lisp
 
@@ -161,10 +161,13 @@ Revolutionary programming features, syntax or whatever
 
 http://www.nunan.myzen.co.uk/algol68/pame.pdf
 https://jmvdveer.home.xs4all.nl/algol.html
+https://www.archlinux.org/packages/community/x86_64/algol68g/
 
 *** TODO MODULA-2/MODULA-3
 
 A more modern Pascal?
+
+https://github.com/modula3/cm3
 
 *** TODO Pike
 
@@ -408,7 +411,7 @@ https://marcobambini.github.io/gravity/
 
 Yet another embedding language.
 
-*** TODO Fantom
+*** DONE Fantom
 
 Better Java except it targets JVM/CLR/JS
 
@@ -416,7 +419,7 @@ http://fantom.org/
 
 *** TODO Beta
 
-Old OOP language with minimal syntax
+Old OOP language with minimal syntax, derived from Simula-67
 
 http://cs.au.dk/~beta/doc/faq/beta-language-faq.html
 
@@ -448,6 +451,8 @@ http://www.squirrel-lang.org/
 *** TODO Oberon
 
 The Oxford Oberon compiler might work
+
+http://miasap.se/obnc/
 
 *** TODO Euphoria
 
@@ -585,6 +590,10 @@ Readline.  It's intended as a compilation target (as done by the Haxe
 implementation), but it should be possible to write it by hand.
 
 https://nekovm.org/
+
+*** TODO Simula-67
+
+The first OOP language they say.
 
 * Other stuff
 
