@@ -1,0 +1,98 @@
+EXTERNAL CLASS Util;
+
+EXTERNAL C PROCEDURE getenv IS
+   TEXT PROCEDURE GetEnv(key); TEXT key;;
+
+EXTERNAL C PROCEDURE add_history IS
+   PROCEDURE add_history(line); TEXT line;;
+
+BEGIN
+   TEXT historyfile;
+
+   PROCEDURE AddHistory(line); TEXT line;
+   COMMENT HACK: foreign function doesn't see the substring, but the
+      main string unless it's copied...;
+   add_history(Copy(line));
+
+   TEXT PROCEDURE FileContent(path); TEXT path;
+   BEGIN TEXT buffer; REF(InByteFile) f;
+      f :- NEW InByteFile(path);
+      f.Open;
+      buffer :- Blanks(FileSize(path));
+      f.InText(buffer);
+      f.Close;
+      FileContent :- buffer;
+   END;
+
+   BOOLEAN PROCEDURE FileExists(path); TEXT path;
+   BEGIN REF(InByteFile) f; BOOLEAN result;
+      f :- NEW InByteFile(path);
+      f.Open;
+      COMMENT HACK: this shouldn't even work, but it does;
+      result := NOT f.Endfile;
+      f.Close;
+      FileExists := result;
+   END;
+
+   INTEGER PROCEDURE FindChar(buffer, c, i); TEXT buffer; CHARACTER c; INTEGER i;
+   BEGIN
+      buffer.SetPos(i);
+      WHILE buffer.More AND THEN buffer.GetChar <> c DO i := i + 1;
+      FindChar := IF i > buffer.Length THEN -1 ELSE i;
+   END;
+
+   PROCEDURE LoadHistory;
+   BEGIN TEXT buffer; INTEGER beg, i; BOOLEAN done;
+      IF FileExists(historyfile) THEN BEGIN
+            buffer :- FileContent(historyfile);
+            done := FALSE;
+            beg := 1;
+            WHILE NOT done DO BEGIN
+                  i := FindChar(buffer, '!10!', beg);
+                  IF i > 0 THEN BEGIN
+                        AddHistory(buffer.Sub(beg, i - beg));
+                        beg := i + 1;
+                     END
+                  ELSE done := TRUE
+               END;
+         END;
+   END;
+
+   PROCEDURE AppendLine(path, line); TEXT path, line;
+   BEGIN REF(DirectByteFile) f;
+      f :- NEW DirectByteFile(path);
+      f.Open;
+      COMMENT HACK: setting mode to append isn't honored, so seek to END;
+      WHILE NOT f.Endfile DO f.InByte;
+      f.OutText(Line);
+      f.OutByte(10);
+      f.Close;
+   END;
+
+   PROCEDURE AddToHistory(line); TEXT line;
+   BEGIN
+      IF line =/= "" THEN BEGIN
+            AddHistory(line);
+            AppendLine(historyfile, line);
+         END;
+   END;
+
+   PROCEDURE Repl(prompt); TEXT prompt;
+   BEGIN TEXT line; BOOLEAN done;
+      LoadHistory;
+      WHILE NOT done DO BEGIN
+            line :- Readline(prompt);
+            IF line =/= "" THEN BEGIN
+                  line :- Chomp(Line);
+                  OutText(line);
+                  OutImage;
+                  AddToHistory(line);
+               END
+            ELSE done := TRUE;
+         END;
+      OutImage;
+   END;
+
+   historyfile :- GetEnv("HOME") & "/.mal_history";
+   Repl("> ");
+END;

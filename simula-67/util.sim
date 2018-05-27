@@ -108,11 +108,25 @@ END;
 INTEGER PROCEDURE TheAnswer;
 TheAnswer := 2 * 3 * (3 + 4);
 
-TEXT PROCEDURE Hostname;
-BEGIN TEXT buffer; REF(InByteFile) f;
-   f :- NEW InByteFile("/etc/hostname");
+INTEGER PROCEDURE FileSize(path); TEXT path;
+BEGIN REF(InByteFile) f; INTEGER size;
+   f :- NEW InByteFile(path);
    f.Open;
-   buffer :- Blanks(f.bytesize);
+   size := -1;
+   WHILE NOT f.Endfile DO BEGIN
+         f.InByte;
+         size := size + 1;
+      END;
+   f.Close;
+   FileSize := size;
+END;
+
+TEXT PROCEDURE Hostname;
+BEGIN TEXT path, buffer; REF(InByteFile) f;
+   path :- "/etc/hostname";
+   f :- NEW InByteFile(path);
+   f.Open;
+   buffer :- Blanks(FileSize(path));
    f.InText(buffer);
    f.Close;
    Hostname :- Chomp(buffer);
@@ -143,21 +157,18 @@ Special := c = '(' OR c = ')' OR c = '+' OR c = '-' OR c = '*' OR c = '/';
 
 INTEGER PROCEDURE ReadSpaces(input, i); TEXT input; INTEGER i;
 BEGIN
-   OutText("S"); OutImage;
    WHILE i <= input.Length AND THEN Space(CharAt(input, i)) DO i := i + 1;
    ReadSpaces := i;
 END;
 
 INTEGER PROCEDURE ReadDigits(input, i); TEXT input; INTEGER i;
 BEGIN
-   OutText("D"); OutImage;
    WHILE i <= input.Length AND THEN Digit(CharAt(input, i)) DO i := i + 1;
    ReadDigits := i;
 END;
 
 INTEGER PROCEDURE ReadSpecial(input, i); TEXT input; INTEGER i;
 BEGIN
-   OutText("X"); OutImage;
    ReadSpecial := i + 1;
 END;
 
