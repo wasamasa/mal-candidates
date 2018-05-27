@@ -1,11 +1,8 @@
 .PHONY: clean
 
-JAVA = $(JAVA)
-JAVA := /usr/bin/java
-ASC = $(ASC)
-ASC := /usr/lib/redtamarin/support/asc2.jar
-ASRUNTIME = $(ASRUNTIME)
-ASRUNTIME := /usr/lib/redtamarin/lib/redtamarin.abc
+JAVA ?= /usr/bin/java
+ASC ?= /usr/lib/redtamarin/support/asc2.jar
+ASRUNTIME ?= /usr/lib/redtamarin/lib/redtamarin.abc
 
 all: test.abc
 
