@@ -1,20 +1,17 @@
 .PHONY: all clean
-SIM = cim -H
-SIMO = $(SIM) -c
+SIM = cim -H -c
 LDLIBS = -lreadline -lhistory -lcim
 
-test: readline.o argv.o util.o test.o
-
-util.o: util.sim
+%.o: %.sim
 	$(SIM) $<
 
-test.o: test.sim util.o
-	$(SIMO) $<
-
+test: readline.o argv.o util.o test.o
 repl: readline.o argv.o util.o repl.o
 
+util.o: util.sim
+
+test.o: test.sim util.o
 repl.o: repl.sim util.o
-	$(SIMO) $<
 
 clean:
 	$(RM) *.o *.atr *.shl test repl
