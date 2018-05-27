@@ -5,6 +5,8 @@ LDLIBS = -lreadline -lhistory -lcim
 %.o: %.sim
 	$(SIM) $<
 
+all: test repl
+
 test: readline.o argv.o util.o test.o
 repl: readline.o argv.o util.o repl.o
 
