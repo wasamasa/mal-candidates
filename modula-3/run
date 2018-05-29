@@ -1,0 +1,2 @@
+#!/bin/bash
+printf "foo\nbar\nbaz" | exec $(dirname $0)/AMD64_LINUX/Test "$@"
