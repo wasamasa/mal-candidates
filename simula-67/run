@@ -1,2 +1,2 @@
 #!/bin/bash
-printf "foo\nbar\nbaz" | exec ./test "$@"
+printf "foo\nbar\nbaz" | exec $(dirname $0)/test "$@"

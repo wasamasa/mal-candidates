@@ -1,2 +1,2 @@
 #!/bin/bash
-printf "foo\nbar\nbaz" | exec wren test.wren $@
+printf "foo\nbar\nbaz" | exec wren $(dirname $0)/test.wren $@
