@@ -1,4 +1,12 @@
 import("libm3")
-module("Util")
-implementation("Test")
-program("Test")
+
+if defined("Test")
+  module("Util")
+  implementation("Test")
+  program("Test")
+else
+  import_lib("readline", "/usr/lib")
+  module("Readline")
+  implementation("Repl")
+  program("Repl")
+end
