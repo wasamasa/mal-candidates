@@ -1,8 +1,6 @@
 INTERFACE Util;
 IMPORT TextSeq, TextIntTbl;
 
-PROCEDURE Init();
-
 PROCEDURE Join (seq: TextSeq.T; sep: TEXT): TEXT;
 
 PROCEDURE ReadWords(prompt: TEXT): TextSeq.T;

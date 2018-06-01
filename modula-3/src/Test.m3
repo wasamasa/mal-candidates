@@ -6,7 +6,6 @@ VAR then: REAL;
 VAR dict: TextIntTbl.T;
 VAR r1: Rect;
 BEGIN
-  Util.Init();
   then := Util.Now();
   dict := NEW(TextIntTbl.Default).init();
   EVAL dict.put("a", 1);

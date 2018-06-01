@@ -4,13 +4,6 @@ IMPORT Text, TextSeq, TextIntTbl, Params, ETimer;
 
 VAR timer: ETimer.T;
 
-PROCEDURE Init() =
-  BEGIN
-    timer := ETimer.New("Runtime");
-    ETimer.Enable();
-    ETimer.Push(timer);
-  END Init;
-
 PROCEDURE Join (seq: TextSeq.T; sep: TEXT): TEXT =
   VAR printsep: BOOLEAN := FALSE;
   VAR wr: TextWr.T := NEW(TextWr.T).init();
@@ -125,4 +118,7 @@ PROCEDURE Now(): REAL =
   END Now;
 
 BEGIN
+  timer := ETimer.New("Runtime");
+  ETimer.Enable();
+  ETimer.Push(timer);
 END Util.

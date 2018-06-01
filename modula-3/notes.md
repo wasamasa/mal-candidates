@@ -15,6 +15,10 @@
 - I'm not terribly happy with their `make` replacement as it doesn't
   work perfectly and can get into a state where you need to clean
   everything to proceed
+- It has the limitation of only allowing one generated program file
+  per `m3makefile`, something I worked around with by using their
+  `ifdef` equivalent and passing the name of the program I wanted to
+  build via `make`
 - Their compiler assumes only source files are in the current
   directory and creates a directory named after the target
   architecture to put binaries in
@@ -37,3 +41,6 @@
   been missing is regular expressions (you can use `Lex` instead)
 - Readers don't have a `PeekChar` method, instead you use `GetChar`
   followed by `UnGetChar`
+- FFI links to a shared library and requires an unsafe module with
+  `<*EXTERNAL*>` pragmas plus copious usage of their helper libraries
+  to manage memory and convert data types
