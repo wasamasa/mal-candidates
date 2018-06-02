@@ -1,0 +1,53 @@
+MODULE Test;
+IMPORT Util, Out;
+
+VAR then: REAL;
+    hostname: Util.Text;
+    dict: Util.List;
+    r1: Util.Rect;
+BEGIN
+  then := Util.Now();
+  dict := Util.Cons(NIL, NIL);
+  dict := Util.Cons(Util.Cons(Util.MakeLispText("b"),
+                              Util.MakeLispText("2")), dict);
+  dict := Util.Cons(Util.Cons(Util.MakeLispText("a"),
+                              Util.MakeLispText("1")), dict);
+  r1.size := 6;
+  Out.String("Reading words...");
+  Out.Ln;
+  Out.String("Words: ");
+  Util.OutTextList(Util.ReadWords("> "));
+  Out.Ln;
+  Out.String("The answer: ");
+  Out.Int(Util.TheAnswer(), 0);
+  Out.Ln;
+  (* no closures *)
+  Util.Hostname(hostname);
+  Out.String("Hostname: ");
+  Out.String(hostname);
+  Out.Ln;
+  Out.String("ARGV: ");
+  Util.OutTextList(Util.Argv());
+  Out.Ln;
+  (* no exception handling *)
+  (* no apply *)
+  Out.String("Tokens: ");
+  Util.OutTextList(Util.Tokenize("1 * (2 * 3) + 4"));
+  Out.Ln;
+  Out.String("Keys: ");
+  Util.OutTextList(Util.Keys(dict));
+  Out.Ln;
+  Out.String("Rect r1 size: ");
+  Out.Int(r1.size, 0);
+  Out.Ln;
+  Out.String("Doubling rect size...");
+  Out.Ln;
+  r1.size := r1.size * 2;
+  Out.String("Rect r1 size: ");
+  Out.Int(r1.size, 0);
+  Out.Ln;
+  Out.String("Elapsed time: ");
+  Util.OutFix(Util.Now() - then, 2);
+  Out.String("ms");
+  Out.Ln;
+END Test.

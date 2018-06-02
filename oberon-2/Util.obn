@@ -1,0 +1,283 @@
+MODULE Util;
+IMPORT Files, Strings, In, Out, Input, stdArgs;
+
+TYPE Rect* = RECORD
+       size*: INTEGER
+     END;
+
+     Text* = ARRAY 256 OF CHAR;
+
+     List* = POINTER TO ListRec;
+     ListRec = RECORD
+       ar: List;
+       dr: List
+     END;
+
+     LispText = POINTER TO LispTextRec;
+     LispTextRec = RECORD(ListRec)
+       val: Text
+     END;
+
+PROCEDURE MakeLispText*(content: Text): LispText;
+  VAR t: LispText;
+BEGIN
+  NEW(t);
+  t.val := content;
+  RETURN t
+END MakeLispText;
+
+PROCEDURE Car*(arg: List): List;
+BEGIN
+  RETURN arg.ar
+END Car;
+
+PROCEDURE Cdr*(arg: List): List;
+BEGIN
+  RETURN arg.dr
+END Cdr;
+
+PROCEDURE Cons*(x: List; xs: List): List;
+  VAR l: List;
+BEGIN
+  NEW(l);
+  l.ar := x;
+  l.dr := xs;
+  RETURN l
+END Cons;
+
+PROCEDURE Null*(arg: List): BOOLEAN;
+BEGIN
+  RETURN arg.dr = NIL
+END Null;
+
+PROCEDURE Pair*(arg: List): BOOLEAN;
+BEGIN
+  RETURN arg.dr # NIL
+END Pair;
+
+PROCEDURE OutTextList*(arg: List);
+  VAR printsp: BOOLEAN;
+      t: List;
+BEGIN
+  printsp := FALSE;
+  Out.String("(");
+  WHILE Pair(arg) DO
+    t := Car(arg);
+    IF printsp THEN Out.String(" ") END;
+    Out.String(22X);
+    Out.String(t(LispText).val);
+    Out.String(22X);
+    arg := Cdr(arg);
+    printsp := TRUE;
+  END;
+  Out.String(")");
+END OutTextList;
+
+PROCEDURE Reverse*(arg: List): List;
+  VAR l: List;
+BEGIN
+  l := Cons(NIL, NIL);
+  WHILE Pair(arg) DO
+    l := Cons(Car(arg), l);
+    arg := Cdr(arg);
+  END;
+  RETURN l
+END Reverse;
+
+PROCEDURE ReadLine(VAR buffer: Text): BOOLEAN;
+  VAR ch: CHAR;
+      i: INTEGER;
+      done, ret: BOOLEAN;
+BEGIN
+  done := FALSE;
+  i := 0;
+  WHILE ~done DO
+    In.Char(ch);
+    IF ch = 0FFX THEN
+      done := TRUE;
+      buffer[i] := CHR(0);
+      ret := Strings.Length(buffer) # 0;
+    ELSIF ch = 0AX THEN
+      done := TRUE;
+      buffer[i] := CHR(0);
+      ret := TRUE;
+    ELSE
+      buffer[i] := ch;
+      i := i + 1;
+    END;
+  END;
+  RETURN ret
+END ReadLine;
+
+PROCEDURE ReadWords*(prompt: Text): List;
+  VAR l: List;
+      buffer: Text;
+      done, ret: BOOLEAN;
+BEGIN
+  l := Cons(NIL, NIL);
+  REPEAT
+    Out.String(prompt);
+    ret := ReadLine(buffer);
+    IF ret THEN l := Cons(MakeLispText(buffer), l) END;
+  UNTIL ~ret;
+  RETURN Reverse(l)
+END ReadWords;
+
+PROCEDURE TheAnswer*(): INTEGER;
+BEGIN
+  RETURN 4 * 9 + 6
+END TheAnswer;
+
+PROCEDURE Chomp(VAR arg: Text);
+  VAR s: INTEGER;
+BEGIN
+  s := Strings.Length(arg);
+  IF (s > 0) & (arg[s-1] = CHR(10)) THEN
+    arg[s-1] := CHR(0);
+  END;
+END Chomp;
+
+PROCEDURE Hostname*(VAR arg: Text);
+  VAR f: Files.File;
+      r: Files.Rider;
+      i: INTEGER;
+      b: BYTE;
+      done: BOOLEAN;
+BEGIN
+  f := Files.Old("/etc/hostname");
+  ASSERT(f # NIL);
+  Files.Set(r, f, 0);
+
+  done := FALSE;
+  i := 0;
+  WHILE ~done DO
+    Files.Read(r, b);
+    IF ~r.eof THEN
+      arg[i] := CHR(b);
+      i := i + 1;
+    ELSE
+      done := TRUE;
+    END;
+  END;
+  arg[i] := CHR(0);
+  Chomp(arg);
+END Hostname;
+
+PROCEDURE Argv*(): List;
+  VAR l: List;
+      arg: Text;
+      i, res: INTEGER;
+BEGIN
+  l := Cons(NIL, NIL);
+  FOR i := 0 TO stdArgs.count - 1 DO
+    stdArgs.Get(i, arg, res);
+    l := Cons(MakeLispText(arg), l);
+  END;
+  RETURN Reverse(l)
+END Argv;
+
+PROCEDURE IsSpace(ch: CHAR): BOOLEAN;
+BEGIN
+  RETURN ch = " "
+END IsSpace;
+
+PROCEDURE IsDigit(ch: CHAR): BOOLEAN;
+BEGIN
+  RETURN (ch >= "0") & (ch <= "9")
+END IsDigit;
+
+PROCEDURE IsSpecial(ch: CHAR): BOOLEAN;
+BEGIN
+  RETURN (ch = "(") OR (ch = ")") OR (ch = "+")
+      OR (ch = "-") OR (ch = "*") OR (ch = "/")
+END IsSpecial;
+
+PROCEDURE ReadSpaces(input: Text; i: INTEGER): INTEGER;
+  VAR s: INTEGER;
+BEGIN
+  s := Strings.Length(input);
+  WHILE (i < s) & IsSpace(input[i]) DO i := i + 1 END;
+  RETURN i
+END ReadSpaces;
+
+PROCEDURE ReadDigits(input: Text; i: INTEGER): INTEGER;
+  VAR s: INTEGER;
+BEGIN
+  s := Strings.Length(input);
+  WHILE (i < s) & IsDigit(input[i]) DO i := i + 1 END;
+  RETURN i
+END ReadDigits;
+
+PROCEDURE ReadSpecial(input: Text; i: INTEGER): INTEGER;
+BEGIN
+  RETURN i + 1
+END ReadSpecial;
+
+PROCEDURE Tokenize*(input: Text): List;
+  VAR l: List;
+      i, s, beg: INTEGER;
+      ch: CHAR;
+      token: Text;
+BEGIN
+  l := Cons(NIL, NIL);
+  s := Strings.Length(input);
+  i := 0;
+  WHILE i < s DO
+    ch := input[i];
+    IF IsSpace(ch) THEN
+      i := ReadSpaces(input, i);
+    ELSIF IsDigit(ch) THEN
+      beg := i;
+      i := ReadDigits(input, i);
+      Strings.Extract(input, beg, i - beg, token);
+      l := Cons(MakeLispText(token), l);
+    ELSIF IsSpecial(ch) THEN
+      beg := i;
+      i := ReadSpecial(input, i);
+      Strings.Extract(input, beg, i - beg, token);
+      l := Cons(MakeLispText(token), l);
+    END;
+  END;
+  RETURN Reverse(l)
+END Tokenize;
+
+PROCEDURE Keys*(dict: List): List;
+  VAR l: List;
+BEGIN
+  l := Cons(NIL, NIL);
+  WHILE Pair(dict) DO
+    l := Cons(Car(Car(dict)), l);
+    dict := Cdr(dict);
+  END;
+  RETURN Reverse(l)
+END Keys;
+
+PROCEDURE Fltmod(x: REAL; y: REAL): REAL;
+BEGIN
+  WHILE x > y DO
+    x := x - y;
+  END;
+  RETURN x
+END Fltmod;
+
+PROCEDURE OutFix*(n: REAL; prec: INTEGER);
+  VAR tmp: REAL;
+BEGIN
+  Out.Int(FLOOR(n), 0);
+  IF prec > 0 THEN
+    tmp := n - FLT(FLOOR(n));
+    Out.String(".");
+    WHILE prec > 0 DO
+      tmp := Fltmod(tmp * 10.0, 10.0);
+      Out.Int(FLOOR(tmp), 0);
+      prec := prec - 1;
+    END;
+  END;
+END OutFix;
+
+PROCEDURE Now*(): REAL;
+BEGIN
+  RETURN FLT(Input.Time()) * 1000.0 / FLT(Input.TimeUnit)
+END Now;
+
+END Util.
