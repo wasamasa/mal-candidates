@@ -30,3 +30,9 @@
 - The OBNC compiler is quite good, but the error messages are minimal.
   You only get "syntax error" for many problems and have to figure it
   out yourself.  This includes things like an extraneous semicolon...
+- FFI is usable, but kind of convoluted to get into. Just check their README.
+- File handling is weird. There is no obvious way of appending to a
+  file, so I had to fumble around until I noticed this implementation
+  allows me to seek to the end and write into a file opened for
+  reading.  More importantly, you must call `Files.Register` before
+  `Files.Close`, unlike in every test file...

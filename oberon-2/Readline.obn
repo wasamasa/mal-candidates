@@ -1,0 +1,12 @@
+MODULE Readline;
+
+PROCEDURE Readline*(prompt: ARRAY OF CHAR; VAR line: ARRAY OF CHAR): BOOLEAN;
+BEGIN
+  RETURN TRUE
+END Readline;
+
+PROCEDURE AddHistory*(line: ARRAY OF CHAR);
+BEGIN
+END AddHistory;
+
+END Readline.

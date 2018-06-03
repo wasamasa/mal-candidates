@@ -1,0 +1,119 @@
+MODULE Repl;
+IMPORT Readline, Out, Strings, Files, stdEnv;
+
+TYPE Text = ARRAY 256 OF CHAR;
+
+VAR
+  historyfile: Text;
+  res: INTEGER;
+
+PROCEDURE IsBlank(t: Text): BOOLEAN;
+  VAR
+    i, s: INTEGER;
+    result: BOOLEAN;
+BEGIN
+  result := TRUE;
+  s := Strings.Length(t);
+  FOR i := 0 TO s - 1 DO
+    IF t[i] # " " THEN result := FALSE END;
+  END;
+  RETURN result
+END IsBlank;
+
+PROCEDURE ReadLine(VAR r: Files.Rider; f: Files.File; VAR line: Text);
+  VAR
+    b: BYTE;
+    i: INTEGER;
+    done: BOOLEAN;
+BEGIN
+  done := FALSE;
+  i := 0;
+  WHILE ~done DO
+    Files.Read(r, b);
+    IF r.eof OR (b = 10) THEN
+      done := TRUE;
+      line[i] := CHR(0);
+    ELSE
+      line[i] := CHR(b);
+      i := i + 1;
+    END;
+  END;
+END ReadLine;
+
+PROCEDURE LoadHistory;
+  VAR
+    f: Files.File;
+    r: Files.Rider;
+    line: Text;
+    done: BOOLEAN;
+BEGIN
+  f := Files.Old(historyfile);
+  done := FALSE;
+  IF f # NIL THEN
+    Files.Set(r, f, 0);
+    WHILE ~done DO
+      ReadLine(r, f, line);
+      IF ~r.eof THEN
+        Readline.AddHistory(line);
+      ELSE
+        done := TRUE;
+      END;
+    END;
+  END;
+END LoadHistory;
+
+PROCEDURE WriteLine(VAR r: Files.Rider; f: Files.File; line: Text);
+BEGIN
+  (* NOTE: this writes a NULL-terminated line, replace it with a newline *)
+  Files.WriteString(r, line);
+  Files.Set(r, f, Files.Pos(r) - 1);
+  Files.Write(r, 10);
+END WriteLine;
+
+PROCEDURE AppendLine(path: Text; line: Text);
+  VAR
+    f: Files.File;
+    r: Files.Rider;
+BEGIN
+  f := Files.Old(path);
+  IF f = NIL THEN f := Files.New(path) END;
+  Files.Set(r, f, Files.Length(f));
+  WriteLine(r, f, line);
+  Files.Register(f);
+  Files.Close(f);
+END AppendLine;
+
+PROCEDURE AddToHistory(line: Text);
+BEGIN
+  IF ~IsBlank(line) THEN
+    Readline.AddHistory(line);
+    AppendLine(historyfile, line);
+  END;
+END AddToHistory;
+
+PROCEDURE Repl(prompt: Text);
+  VAR
+    buffer: Text;
+    done: BOOLEAN;
+BEGIN
+  done := FALSE;
+  LoadHistory;
+  WHILE ~done DO
+    IF Readline.Readline(prompt, buffer) THEN
+      IF ~IsBlank(buffer) THEN
+        Out.String(buffer);
+        Out.Ln;
+        AddToHistory(buffer);
+      END;
+    ELSE
+      done := TRUE;
+    END;
+  END;
+  Out.Ln;
+END Repl;
+
+BEGIN
+  stdEnv.Get("HOME", historyfile, res);
+  Strings.Append("/.mal_history", historyfile);
+  Repl("> ");
+END Repl.
