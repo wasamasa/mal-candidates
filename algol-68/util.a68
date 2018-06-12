@@ -1,0 +1,144 @@
+MODE FORM = UNION(STRING, INT, LIST),
+     CELL = STRUCT(FORM ar, FORM dr),
+     LIST = REF CELL;
+LIST nil = NIL;
+PROC cons = (FORM x, FORM y) LIST: HEAP CELL := (x, y);
+PROC car = (LIST l) FORM: ar OF l;
+PROC cdr = (LIST l) FORM: dr OF l;
+PROC pair = (LIST l) BOOL: l ISNT nil;
+
+PROC print list = (LIST l) VOID:
+BEGIN
+  BOOL printsp := FALSE;
+  LIST tmp := l;
+  print("(");
+  WHILE pair(tmp)
+  DO
+    IF printsp THEN
+      print(" ")
+    FI;
+    CASE car(tmp) IN
+    (STRING s): print(("""", s ,"""")),
+    (INT i): print(i),
+    (LIST list): print list(list)
+    ESAC;
+    CASE cdr(tmp) IN
+    (LIST rest): IF rest IS nil THEN GOTO end ELSE tmp := rest FI,
+    (STRING s): (print((" . ", """", s, """")); GOTO end),
+    (INT i): (printf(($" . ", %d$, i)); GOTO end)
+    ESAC;
+    printsp := TRUE
+  OD;
+  end: print(")")
+END;
+
+PROC reverse list = (LIST l) LIST:
+BEGIN
+  LIST tmp := l, result := nil;
+  WHILE pair(tmp)
+  DO
+    result := cons(car(tmp), result);
+    CASE cdr(tmp) IN
+    (LIST rest): IF rest IS nil THEN GOTO end ELSE tmp := rest FI
+    OUT abend("malformed list")
+    ESAC
+  OD;
+  end: result
+END;
+
+PROC read word = (STRING prompt) STRING:
+BEGIN
+  HEAP STRING word;
+  print(prompt);
+  read(word);
+  IF NOT end of file(stand in) THEN
+    read(new line)
+  FI;
+  word
+END;
+
+PROC read words = (STRING prompt) LIST:
+BEGIN
+  LIST words := nil;
+  WHILE NOT end of file(stand in)
+  DO
+    words := cons(read word(prompt), words)
+  OD;
+  reverse list(words)
+END;
+
+PROC the answer = INT: 6 * 9 - 12;
+
+PROC hostname = STRING:
+BEGIN
+  STRING line;
+  FILE f;
+  open(f, "/etc/hostname", stand in channel);
+  get(f, line);
+  close(f);
+  line
+END;
+
+PROC my argv = LIST:
+BEGIN
+  LIST args := nil;
+  FOR i FROM 2 TO a68g argc
+  DO
+    args := cons(a68g argv(i), args)
+  OD;
+  reverse list(args)
+END;
+
+PROC tokenize = (STRING input) LIST:
+BEGIN
+  LIST tokens := nil;
+  INT start, end;
+  INT i := 1;
+  STRING re := "^[[:space:]]*([-+*/()]|[0-9]+)";
+  WHILE i < UPB input
+  DO
+    grep in string(re, input[i:], start, end);
+    STRING token := input[i:][start:end];
+    sub in string("^[[:space:]]", "", token);
+    tokens := cons(token, tokens);
+    i +:= end - start + 1
+  OD;
+  reverse list(tokens)
+END;
+
+PROC keys = (LIST dict) LIST:
+BEGIN
+  LIST tmp := dict, result := nil;
+  WHILE pair(tmp)
+  DO
+    CASE car(tmp) IN
+    (LIST l): result := cons(car(l), result)
+    OUT abend("malformed list")
+    ESAC;
+    CASE cdr(tmp) IN
+    (LIST rest): IF rest IS nil THEN GOTO end ELSE tmp := rest FI
+    OUT abend("malformed list")
+    ESAC
+  OD;
+  end: reverse list(result)
+END;
+
+MODE RECT = STRUCT(INT size);
+
+PROC now = REAL:
+BEGIN
+  # the cpu time function measures CPU time only #
+  REAL time;
+  FILE f;
+  system("date +%s%3N > /tmp/mal_time");
+  open(f, "/tmp/mal_time", stand in channel);
+  get(f, time);
+  close(f);
+  system("rm /tmp/mal_time");
+  time
+END;
+
+# PROC grep in string = (STRING pattern, string, REF INT start, end) INT #
+# PROC is space = (CHAR c) BOOL #
+# PROC is digit = (CHAR c) BOOL #
+# PROC end of line = (REF FILE file) BOOL #

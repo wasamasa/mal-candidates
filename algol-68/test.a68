@@ -1,0 +1,32 @@
+PR include "util.a68" PR
+
+BEGIN
+  REAL then := now;
+  LIST dict := cons(cons("foo", 1), cons(cons("bar", 2), nil));
+  # NOTE: you can do STRUCT foo = (1, 2), but not assign (1) #
+  RECT r1;
+  size OF r1 := 6;
+  printf($"Reading words...", l$);
+  print("Words: ");
+  print list(read words("> "));
+  print(new line);
+  printf(($"The answer: ", %d, l$, the answer));
+  # no closures #
+  printf(($"Hostname: ", %s, l$, hostname));
+  print("ARGV: ");
+  print list(my argv);
+  print(new line);
+  # no catchable exceptions other than for I/O #
+  # no varargs #
+  print("Tokens: ");
+  print list(tokenize("1 * (2 * 3) + 4"));
+  print(new line);
+  print("Keys: ");
+  print list(keys(dict));
+  print(new line);
+  printf(($"Rect r1 size: ", %d, l$, size OF r1));
+  printf($"Doubling rect size...", l$);
+  size OF r1 *:= 2;
+  printf(($"Rect r1 size: ", %d, l$, size OF r1));
+  printf(($"Elapsed time: ", %.2f, l$, now - then))
+END

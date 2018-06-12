@@ -1,0 +1,3 @@
+#!/bin/bash
+cd $(dirname $0) # necessary for include pragma to work
+printf "foo\nbar\nbaz" | exec a68g test.a68 -- "$@"
