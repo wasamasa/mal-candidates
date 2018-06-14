@@ -1,2 +1,2 @@
 #!/bin/bash
-printf "foo\nbar\nbaz" | exec txr $(dirname $0)/test.tl "$@"
+printf "foo\nbar\nbaz" | exec txr $(dirname $0)/test.tlo "$@"

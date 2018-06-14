@@ -1,4 +1,4 @@
-(load "util.tl")
+(load "util")
 
 (defvar then (now))
 (defvar dict (hash-from-pairs '((foo 1) (bar 2))))
