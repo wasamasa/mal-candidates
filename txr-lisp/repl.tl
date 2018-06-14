@@ -26,4 +26,5 @@
         (add-to-history line))))
   (format t "\n"))
 
-(repl "> ")
+(compile-only
+ (repl "> "))

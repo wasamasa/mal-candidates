@@ -1,2 +1,2 @@
 #!/bin/bash
-exec txr repl.tl
+exec txr repl.tlo
