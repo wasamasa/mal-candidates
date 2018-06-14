@@ -15,7 +15,7 @@
 - I feel kind of reminded of Newlisp, but there's far more helpful
   than useless feeling things in its toolbox
 - I think this is the shortest tokenization function I wrote so far
-- The only thing I'm missing is a `destructuring-bind`-like thing, I
-  only found one in the pattern language
+- `destructuring-bind` is named `tree-bind` here which is rather
+  curious, why not name it `bind` like in the pattern language?
 - Their regex dialect is homebrew and misses lots of things, such as
   anchoring and POSIX character classes

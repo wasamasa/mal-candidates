@@ -41,10 +41,7 @@
 (defstruct (rect size) nil (size 0))
 
 (defun now ()
-  (let* ((t0-sec (car t0))
-         (t0-usec (cdr t0))
-         (t1 (time-usec))
-         (t1-sec (car t1))
-         (t1-usec (cdr t1)))
-    (+ (* (- t1-sec t0-sec) 1000)
-       (/ (- t1-usec t0-usec) 1000.0))))
+  (tree-bind (t0-sec . t0-usec) t0
+    (tree-bind (t1-sec . t1-usec) (time-usec)
+      (+ (* (- t1-sec t0-sec) 1000)
+         (/ (- t1-usec t0-usec) 1000.0)))))
