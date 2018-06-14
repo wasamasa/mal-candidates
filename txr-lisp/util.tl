@@ -33,7 +33,9 @@
   (apply op ops))
 
 (defun tokenize (input)
-  (mapcar 'trim-str (tok-str input #/ *([+\-*/()]|[0-9]+)/)))
+  ;; NOTE: escaping | is useless, but makes lisp-mode think it's not a
+  ;; unbalanced symbol starter
+  (mapcar 'trim-str (tok-str input #/ *([+\-*/()]\|[0-9]+)/)))
 
 (defun keys (dict)
   (hash-keys dict))
