@@ -1,0 +1,71 @@
+import libaikidoreadline
+native function readline_(prompt)
+native function addHistory(line)
+
+function readline(prompt, var line) {
+  var result = readline_(prompt)
+  if (typeof(result) == "none") {
+    return false
+  } else {
+    line = result
+    return true
+  }
+}
+
+var historyFile = getenv("HOME") + "/.mal_history"
+
+function isBlank(line) {
+  var match = line["^\\s*$"]
+  return sizeof(match) > 0
+}
+
+function chomp(string) {
+  if (sizeof(string) > 0 && string[sizeof(string) - 1] == '\n') {
+    var end = sizeof(string) - 2
+    if (end >= 0) {
+      return string[:end]
+    }
+    return ""
+  }
+  return string
+}
+
+function loadHistory() {
+  try {
+    var lines = System.readfile(historyFile)
+    foreach line lines {
+      if (!isBlank(line)) {
+        addHistory(chomp(line))
+      }
+    }
+  } catch(e) {
+    // ignore
+  }
+}
+
+function appendLine(line) {
+  var f = open(historyFile, OpenMode.OUT | OpenMode.APPEND)
+  line + "\n" -> f
+  close(f)
+}
+
+function addToHistory(line) {
+  if (!isBlank(line)) {
+    addHistory(line)
+    appendLine(line)
+  }
+}
+
+function repl(prompt) {
+  loadHistory()
+  var line = ""
+  while (readline(prompt, line)) {
+    if (!isBlank(line)) {
+      println(line)
+      addToHistory(line)
+    }
+  }
+  println("")
+}
+
+repl("> ")

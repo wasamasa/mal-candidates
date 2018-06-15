@@ -1,0 +1,30 @@
+import util
+
+var then = util.now()
+var dict = {"foo" = 1, "bar" = 2}
+var r1 = new util.Rect(6)
+
+function sum(...) {
+  result = 0
+  foreach arg this.args {
+    result += arg
+  }
+  return result
+}
+
+println("Reading words...")
+println("Words: " + util.join(util.readWords("> "), ", "))
+println("The answer: " + util.theAnswer())
+function greeter = util.makeGreeter("World")
+greeter()
+println("Hostname: " + util.hostname())
+println("ARGV: " + util.join(util.argv(), ", "))
+println("Error: " + util.failGracefully())
+println("Sum: " + util.splat(sum, [1, 2, 3, 4]))
+println("Tokens: " + util.join(util.tokenize("1 * (2 * 3) + 4"), ", "))
+println("Keys: " + util.join(util.keys(dict), ", "))
+println("Rect r1 size: " + r1.getSize())
+println("Doubling rect size...")
+r1.setSize(r1.getSize() * 2)
+println("Rect r1 size: " + r1.getSize())
+printf("Elapsed time: %.2fms\n", util.now() - then)

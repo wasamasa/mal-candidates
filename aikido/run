@@ -1,0 +1,3 @@
+#!/bin/bash
+export AIKIDOPATH=$(dirname $0):$AIKIDOPATH
+printf "foo\nbar\nbaz" | exec aikido test.aikido -- "$@"

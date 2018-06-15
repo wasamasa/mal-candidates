@@ -1,0 +1,112 @@
+import string
+
+package util {
+  public class CustomException(message, data) {
+    public:
+
+    function getMessage() {
+      return message
+    }
+
+    function getData() {
+      return data
+    }
+  }
+
+  public class Rect(size = 0) {
+    public:
+
+    function getSize() {
+      return size
+    }
+
+    function setSize(size) {
+      this.size = size
+    }
+  }
+
+  public function join(vec, sep) {
+    var result = ""
+    var printsep = false
+    foreach item vec {
+      if (printsep) {
+        result += sep
+      }
+      result += item
+      printsep = true
+    }
+    return result
+  }
+
+  function readWord(prompt) {
+    print(prompt)
+    flush(stdout)
+    return readline(stdin)
+  }
+
+  public function readWords(prompt) {
+    var words = []
+    while (!eof(stdin)) {
+      append(words, readWord(prompt))
+    }
+    return words
+  }
+
+  public function theAnswer() {
+    return 2 * (3 * 3 + 4 * 4 - 4)
+  }
+
+  public function makeGreeter(target) {
+    return function() {
+      println("Hello " + target + "!")
+    }
+  }
+
+  public function hostname() {
+    var line = System.readfile("/etc/hostname")[0]
+    return String(line).replace("\\s*$", "")
+  }
+
+  public function argv() {
+    return args
+  }
+
+  public function failGracefully() {
+    try {
+      throw new CustomException("custom", 42)
+    } catch (e) {
+      return e.getMessage() + ": " + e.getData()
+    }
+  }
+
+  public function splat(op, ops) {
+    return op(args = ops)
+  }
+
+  public function tokenize(input) {
+    var re = "^ *([-+*/()]|[0-9]+)"
+    var i = 0
+    var tokens = []
+    while (i < sizeof(input)) {
+      var match = input[i:][re]
+      var start = match[1].start
+      var end = match[1].end
+      var token = input[i:][start:end]
+      append(tokens, token)
+      i += end + 1
+    }
+    return tokens
+  }
+
+  public function keys(dict) {
+    var result = []
+    foreach item dict {
+      append(result, item.first)
+    }
+    return result
+  }
+
+  public function now() {
+    return System.time() / 1000.0
+  }
+}
