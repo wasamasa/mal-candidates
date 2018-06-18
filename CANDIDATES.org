@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [15/105]
+** Languages to implement MAL in [15/108]
 
 *** DONE Emacs Lisp
 
@@ -228,6 +228,9 @@ Real-world Prolog?
 "Icon is a very high-level programming language featuring goal
 directed execution and many facilities for managing strings and
 textual patterns."
+
+In other words, it's the SNOBOL successor.  Unicon is the
+implementation to go for.
 
 *** TODO Myrddin
 
@@ -594,6 +597,16 @@ https://nekovm.org/
 *** TODO Simula-67
 
 The first OOP language they say.
+
+*** TODO xBase / Clipper / Harbour
+
+https://harbour.github.io/
+
+*** TODO Agena
+
+Algol-68 meets Lua and Maple
+
+http://agena.sourceforge.net/index.html
 
 * Other stuff
 
