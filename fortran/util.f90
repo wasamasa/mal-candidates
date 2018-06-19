@@ -35,10 +35,9 @@ contains
     c => t
   end function make_lisp_text
 
-  function is_pair(x) result(b)
+  logical function is_pair(x)
     class(Cell), pointer, intent(in) :: x
-    logical :: b
-    b = associated(x) .and. associated(car(x)) .and. associated(cdr(x))
+    is_pair = associated(x) .and. associated(car(x)) .and. associated(cdr(x))
   end function is_pair
 
   function car(list) result(c)

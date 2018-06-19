@@ -39,3 +39,17 @@
   cases (there are options for initializing variables of certain types
   to sensible/nonsensical defaults), it doesn't implement that feature
   for pointers and allocatable arrays yet.
+- FFI is quite verbose as you have to declare interfaces with the
+  binding to the function, then a subroutine/function that does a thin
+  wrapper around it. This duplicates declarations, but is a necessary
+  evil so that you don't have to `use iso_c_binding` to use the
+  foreign functions.
+- There are two different ways to declare functions, one reminiscent
+  of C (with the return type first, assign result to the function
+  name), the other declaring the result variable afterwards (which
+  permits declaring a more complicated type). I prefer the former for
+  simple types I can't think up good names for, like predicates and
+  their logical values.
+- Subroutines/functions can be part of an internal or external
+  module.  External ones create a `.mod` file during compilation,
+  internal ones are declared at the end of the program...
