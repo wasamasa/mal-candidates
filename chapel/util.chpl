@@ -27,11 +27,9 @@ module util {
 
   proc hostname() {
     try! {
-      var f = open("/etc/hostname", iomode.r);
-      var r = f.reader();
+      var r = openreader("/etc/hostname");
       var line: string;
       r.readline(line);
-      f.close();
       return line.strip(leading=false);
     }
   }

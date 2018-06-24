@@ -28,3 +28,10 @@
   for distributed processing of a collection.  The weirdest part of it
   so far is dictionaries where the keys are linked to the values, yet
   exist in separate variables...
+- FFI is a tad weird as it supports constant C strings only and `NULL`
+  cannot be represented, so you have to use a pointer to char and
+  create a string from it. It cannot represent freeable strings
+  either, instead you mark the C string you create the string from as
+  not to be copied.
+- No append mode in their IO module, even though there is a mapping to
+  append mode in the sources...
