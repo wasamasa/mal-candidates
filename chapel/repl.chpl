@@ -20,12 +20,12 @@ use FileSystem;
 
 var home: c_string;
 Sys.sys_getenv("HOME".c_str(), home);
-var history_file = new string(home) + "/.mal_history";
+var history_file = home:string + "/.mal_history";
 writeln(history_file);
 
 proc load_history() {
   try! {
-    var f = open(history_file, iomode.r);
+    var f = open(history_file, mode=iomode.r);
     for line in f.lines() {
       add_history(line.strip(leading=false));
     }
@@ -38,16 +38,17 @@ proc is_blank(s: string) {
 }
 
 proc append_line(path: string, line: string) {
-  var content: string;
-  try! {
-    var r = openreader(path);
-    r.readstring(content);
-    r.close();
-  } catch FileNotFoundError {}
-
-  var w = openwriter(path);
-  w.writeln(content + line);
+  var f: file;
+  try {
+    f = open(path, mode=iomode.rw);
+  } catch FileNotFoundError {
+    f = open(path, mode=iomode.cw);
+  }
+  var len = f.length();
+  var w = f.writer(start=len);
+  w.writeln(line);
   w.close();
+  f.close();
 }
 
 proc add_to_history(line: string) {

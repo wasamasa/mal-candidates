@@ -55,24 +55,13 @@ module util {
   }
 
   proc tokenize(input: string) {
-    var tokens: [1..1] string;
-    var re = try! Regexp.compile("\\s*?([-+*/()]|\\d+)");
-    tokens.clear();
-    for m in re.matches(input, captures=1) {
-      var from = m[2].offset + 1;
-      var to = from + m[2].length - 1;
-      var token = input[from..to];
-      tokens.push_back(token);
-    }
+    var re = try! Regexp.compile("\\s*([-+*/()]|\\d+)");
+    var tokens = for m in re.matches(input, captures=1) do input[m(2)];
     return tokens;
   }
 
   proc keys(arr: [?dom]) {
-    var result: [1..1] string;
-    result.clear();
-    for k in dom.these() {
-      result.push_back(k);
-    }
+    var result = for key in arr.domain do key;
     return result;
   }
 
