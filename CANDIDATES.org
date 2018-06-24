@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [15/108]
+** Languages to implement MAL in [15/109]
 
 *** DONE Emacs Lisp
 
@@ -294,6 +294,9 @@ It might do it, once obstacles like arbitrary IO are sorted out
 *** TODO XSLT
 
 Welcome to the Turing tarpit!
+
+Slax is an alternative syntax with extra features that might make this
+doable: https://github.com/Juniper/libslax
 
 *** TODO Eiffel
 
@@ -607,6 +610,14 @@ https://harbour.github.io/
 Algol-68 meets Lua and Maple
 
 http://agena.sourceforge.net/index.html
+
+*** TODO C
+
+Yeah, I know that there is already an implementation.  It has a huge
+flaw, depending on too many external dependencies.  The most
+problematic of the bunch is glib in combination with libgc, the code
+marrying both has bitrotted and doesn't work anymore.  This would pave
+the way forward towards a more idiomatic C implementation...
 
 * Other stuff
 
