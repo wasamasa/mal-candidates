@@ -1,4 +1,4 @@
-#+TODO: TODO INPROGRESS | DONE
+#+TODO: TODO TESTED INPROGRESS WONTDO | DONE
 #+OPTIONS: todo:t
 
 * Candidates
@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [15/109]
+** Languages to implement MAL in [16/121]
 
 *** DONE Emacs Lisp
 
@@ -102,7 +102,7 @@ The new cool kid on the block.  It appears to have a significantly
 advanced type system and compiler, as well as support for
 capability-based programming and actors.
 
-*** TODO Rebol / Red
+*** TESTED Rebol / Red
 
 A language proposing DSLs as solution to everything with a syntax
 reminiscent of Tcl/Forth.
@@ -121,7 +121,7 @@ yet.
 
 http://ecere.org/tao.pdf
 
-*** TODO FORTRAN
+*** TESTED FORTRAN
 
 ORLY?
 
@@ -155,7 +155,7 @@ Made for string processing!
 
 Got its own series of The Daily WTF posts...
 
-*** TODO ALGOL
+*** TESTED ALGOL
 
 Revolutionary programming features, syntax or whatever
 
@@ -163,7 +163,7 @@ http://www.nunan.myzen.co.uk/algol68/pame.pdf
 https://jmvdveer.home.xs4all.nl/algol.html
 https://www.archlinux.org/packages/community/x86_64/algol68g/
 
-*** TODO MODULA-2/MODULA-3
+*** TESTED MODULA-2/MODULA-3
 
 A more modern Pascal?
 
@@ -177,17 +177,27 @@ I only know that Emacs supports it...
 
 The other way Lisp could have evolved...
 
-*** TODO Squeak/Newsqueak
+*** TODO Newtonscript
 
 Language used on Apple's Newton hardware.
+
+https://github.com/gnue/NEWT0
 
 *** TODO J/K/APL/IDL
 
 Yay, array processing.  Somewhat Scheme-inspired.
 
-*** TODO Arc, Newlisp, Femtolisp, TXR
+*** TODO Arc, Femtolisp
 
 Minimal Lisp dialects that may be different enough from the rest used already.
+
+*** TESTED Newlisp
+
+Scripting language designed for ease of learning
+
+*** TESTED TXR Lisp
+
+A Lisp designed for text processing and minimal amount of code
 
 *** TODO CHICKEN
 
@@ -244,7 +254,7 @@ http://eigenstate.org/myrddin/
 
 http://shadow-language.org/
 
-*** TODO SuperCollider
+*** INPROGRESS SuperCollider
 
 The other alternative to ChucK.  Has first-class functions, feels more
 like a scripting language and is mostly undocumented.  Fun.
@@ -306,7 +316,7 @@ Contracts?
 
 Like Eiffel, but with Closures and more
 
-*** TODO Standard ML
+*** TESTED Standard ML
 
 The language that inspired Ocaml.  Not sure which implementation to
 pick, there's Mythril (which might be its own thing...), Moscow ML,
@@ -330,7 +340,7 @@ http://ziglang.org/
 Another too high-level looking system programming language.  Made by
 Mr. libsoundio
 
-*** TODO s-lang
+*** TESTED s-lang
 
 http://www.jedsoft.org/slang/doc/html/slang.html
 
@@ -368,9 +378,13 @@ Sort of like Groovy as they run on the JVM
 
 CLR languages
 
-*** TODO Vala, Genie
+*** TESTED Vala
 
-GNOME languages compiling to C using GLib
+GNOME language compiling to C using GLib
+
+*** TODO Genie
+
+Another GNOME language compiling to C using GLib
 
 *** TODO Reason, Bucklescript, Purescript
 
@@ -378,7 +392,7 @@ https://github.com/facebook/reason
 
 Not ready yet, once it documents interop with npm or C...
 
-*** TODO wren, Lox
+*** TESTED wren, Lox
 
 http://wren.io/
 http://www.craftinginterpreters.com/
@@ -454,7 +468,7 @@ closures and is dynamic.
 
 http://www.squirrel-lang.org/
 
-*** TODO Oberon
+*** TESTED Oberon
 
 The Oxford Oberon compiler might work
 
@@ -472,7 +486,7 @@ Allows every programming paradigm!!!
 
 http://www.falconpl.org/
 
-*** TODO Chapel
+*** TESTED Chapel
 
 This shit is cray: http://chapel.cray.com/
 
@@ -480,12 +494,12 @@ This shit is cray: http://chapel.cray.com/
 
 A point-free, concatenative language
 
-*** TODO SPL
+*** TESTED SPL
 
 Scripting language by the STFL author.  Seems to support everything
 you'd need, but careful, it's unmaintained!
 
-*** TODO Coldfusion
+*** TESTED Coldfusion
 
 There's like three open-source implementations of it and it appears
 the language has been split into a PHP-like (templates) and JS-like
@@ -497,6 +511,12 @@ documentation on the Adobe website.
 - Lucee (Railo Fork)
 
 There's also https://www.ortussolutions.com/products/commandbox
+
+*** TESTED Actionscript
+
+The thing used in Flash.
+
+https://github.com/Corsaair/redtamarin
 
 *** TODO Nickle
 
@@ -532,7 +552,7 @@ Reminiscent of Haskell
 
 https://clean.cs.ru.nl/Clean
 
-*** TODO Limbo
+*** TESTED Limbo
 
 Part of the Inferno distribution
 
@@ -597,7 +617,7 @@ implementation), but it should be possible to write it by hand.
 
 https://nekovm.org/
 
-*** TODO Simula-67
+*** TESTED Simula-67
 
 The first OOP language they say.
 
@@ -611,13 +631,67 @@ Algol-68 meets Lua and Maple
 
 http://agena.sourceforge.net/index.html
 
-*** TODO C
+*** TESTED C
 
 Yeah, I know that there is already an implementation.  It has a huge
 flaw, depending on too many external dependencies.  The most
 problematic of the bunch is glib in combination with libgc, the code
 marrying both has bitrotted and doesn't work anymore.  This would pave
 the way forward towards a more idiomatic C implementation...
+
+*** TESTED Aikido
+
+JavaScript with actual Java in it, designed by Sun.
+
+*** TESTED ISLISP
+
+Standardized Lisp somewhere between CL and Scheme
+
+*** TESTED Lush
+
+Lisp designed for scientific processing.  Unfortunately only the 32bit
+version works properly, so Docker-only development it is...
+
+*** TODO Lasso
+
+Proprietary server web scripting thing.  Comes with a CLI and a free
+edition with limited scaling which supposedly works on Ubuntu 14.04 /
+CentOS 6.  Docker-only development, here I come!
+
+http://www.lassoguide.com/
+
+*** TODO SETL
+
+Ancient set manipulation language the first verified Ada compiler was
+implemented in.  There's unfortunately no source downloads...
+
+http://setl.org/setl/bin/Linux-x86-64bit/
+http://www.settheory.com/
+http://www.hakank.org/setl/
+http://setl.org/setl/doc/setl-lib.html
+
+There's also setlX as alternative: https://randoom.org/Software/SetlX
+
+*** TODO 8th
+
+Something forth-like. Unfortunately it's commercial, with evaluation
+copies requiring registration, so getting it running on the CI will be
+a pain.
+
+*** TODO Scopes
+
+Intended for game programming, a mixture of Lisp, ML and Python.
+Quite new, so better wait a month or so until trying it out.
+
+http://scopes.readthedocs.io/en/latest/index.html
+https://bitbucket.org/duangle/scopes/src/default/testing/
+
+*** WONTDO Bennu
+
+A game programming language derived from Div Studio.  Unfortunately
+it's not nearly as good for general purpose programming, it's unclear
+how to create anything more advanced than a fixed-size array, so this
+one's out.
 
 * Other stuff
 
@@ -629,5 +703,6 @@ Resources:
 - Structure and Interpretation of Computer Programs
 - Lisp in Small Pieces
 - Compiler Design in C
+- http://peter.michaux.ca/articles/scheme-from-scratch-introduction
 - http://blog.felixangell.com/blog/virtual-machine-in-c
 - http://www.craftinginterpreters.com/ (incomplete)
