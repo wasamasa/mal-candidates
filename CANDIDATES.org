@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [16/121]
+** Languages to implement MAL in [15/121]
 
 *** DONE Emacs Lisp
 
@@ -169,7 +169,7 @@ A more modern Pascal?
 
 https://github.com/modula3/cm3
 
-*** TODO Pike
+*** TESTED Pike
 
 I only know that Emacs supports it...
 
