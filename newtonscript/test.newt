@@ -1,0 +1,21 @@
+Load("util.newt");
+
+// no varargs, but Apply still works
+local sum := func(a, b, c, d) a + b + c + d;
+local dict := { foo: 1, bar: 2 };
+local r1 := { size: 6 };
+
+Println("Reading words...");
+Println("Words: [" & Join(ReadWords("> "), ", ") & "]");
+Println("The answer:" && TheAnswer());
+MakeGreeter("World"):apply();
+Println("Hostname:" && Hostname());
+Print("Error:" && FailGracefully() & "\n");
+Println("Sum:" && Splat(sum, [1, 2, 3, 4]));
+Println("Tokens: [" & Join(Tokenize("1 * (2 * 3) + 4"), ", ") & "]");
+Println("Keys: [" & Join(Keys(dict), ", ") & "]");
+Println("Rect r1 size:" && r1.size);
+Println("Doubling rect size...");
+r1.size := r1.size * 2;
+Println("Rect r1 size:" && r1.size);
+// no way to measure time

@@ -1,0 +1,3 @@
+#!/bin/bash
+cd $(dirname $0)
+printf "foo\nbar\nbaz" | exec newt test.newt "$@"

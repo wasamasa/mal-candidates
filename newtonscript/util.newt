@@ -1,0 +1,97 @@
+Require("protoFILE");
+Require("protoREGEX");
+
+func Println(s)
+Print(s & "\n");
+
+func Push(array, arg)
+begin
+  local len := Length(array);
+  local result := Array(len + 1, nil);
+  foreach i, value in array do result[i] := value;
+  result[len] := arg;
+  result;
+end;
+
+func Join(array, sep)
+begin
+  local writeSep := nil;
+  local result := "";
+  foreach value in array do
+  begin
+    if writeSep then
+      result := result & sep;
+    result := result & value;
+    writeSep := true;
+  end;
+  result;
+end;
+
+func Chomp(s)
+begin
+  local len := StrLen(s);
+  if len > 0 and s[len-1] = $\n then
+    SubStr(s, 0, len - 1)
+  else
+    s;
+end;
+
+func ReadWord(prompt)
+begin
+  Print(prompt);
+  Gets();
+end;
+
+func ReadWords(prompt)
+begin
+  local word;
+  local words := [];
+  while word := ReadWord(prompt) do words := Push(words, Chomp(word));
+  words;
+end;
+
+func TheAnswer()
+3 * 13 + 3;
+
+func MakeGreeter(target)
+{ apply: func() Print("Hello" && target & "!\n") };
+
+func Hostname()
+begin
+  file := { _proto: @protoFILE };
+  file:open("/etc/hostname", "r");
+  local line := file:gets();
+  file:close();
+  Chomp(line);
+end;
+
+func FailGracefully()
+begin
+  local result;
+  try
+    Throw('|evt.ex.custom|, ["Test", 42])
+  onexception |evt.ex.custom| do
+  begin
+    local e := CurrentException().error;
+    result := e[0] & ": " & e[1];
+  end;
+  result;
+end;
+
+func Splat(op, args)
+Apply(op, args);
+
+func Tokenize(input)
+begin
+  local tokens := [];
+  local re := /[[:space:]]*([-+*/()]|[0-9]+)/;
+  while match := re:match(input) do
+  begin
+    tokens := Push(tokens, match[1]);
+    input := SubStr(input, StrLen(match[0]), nil);
+  end;
+  tokens
+end;
+
+func Keys(dict)
+foreach key, value in dict collect key;

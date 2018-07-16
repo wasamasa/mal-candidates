@@ -191,7 +191,7 @@ I only know that Emacs supports it...
 
 The other way Lisp could have evolved...
 
-*** TODO Newtonscript
+*** TESTED Newtonscript
 
 Language used on Apple's Newton hardware.
 
