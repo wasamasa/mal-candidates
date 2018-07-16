@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [15/121]
+** Languages to implement MAL in [15/125]
 
 *** DONE Emacs Lisp
 
@@ -155,7 +155,17 @@ Made for string processing!
 
 Got its own series of The Daily WTF posts...
 
-*** TESTED ALGOL
+*** WONTDO ALGOL-60
+
+No real string and file support.
+
+*** WONTDO ALGOL-W
+
+The AWE compiler needs lots of patches to run and falls apart when
+compiled with optimizations.  Worse, strings are fixed-size and trying
+to terminate them corrupts them...
+
+*** TESTED ALGOL-68
 
 Revolutionary programming features, syntax or whatever
 
@@ -163,9 +173,13 @@ http://www.nunan.myzen.co.uk/algol68/pame.pdf
 https://jmvdveer.home.xs4all.nl/algol.html
 https://www.archlinux.org/packages/community/x86_64/algol68g/
 
-*** TESTED MODULA-2/MODULA-3
+*** TODO MODULA-2
 
-A more modern Pascal?
+I've yet to find a working compiler for it...
+
+*** TESTED MODULA-3
+
+The most practical Algol derivative
 
 https://github.com/modula3/cm3
 
@@ -692,6 +706,12 @@ A game programming language derived from Div Studio.  Unfortunately
 it's not nearly as good for general purpose programming, it's unclear
 how to create anything more advanced than a fixed-size array, so this
 one's out.
+
+*** TODO Vera
+
+Another hardware description language
+
+https://semiengineering.com/knowledge_centers/languages/vera/
 
 * Other stuff
 
