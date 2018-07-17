@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [15/125]
+** Languages to implement MAL in [15/127]
 
 *** DONE Emacs Lisp
 
@@ -712,6 +712,19 @@ one's out.
 Another hardware description language
 
 https://semiengineering.com/knowledge_centers/languages/vera/
+
+*** TODO Fortress
+
+Fortran as imagined by Sun.  Unfortunately it got no funding (as
+opposed to Chapel and X10), so it's dead.
+
+Reference implementation and corresponding docs available at:
+https://github.com/sirinath/fortress
+
+*** TODO JX9
+
+The UnQLite scripting language, available standalone:
+http://jx9.symisc.net/
 
 * Other stuff
 
