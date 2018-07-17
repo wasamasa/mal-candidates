@@ -1,0 +1,2 @@
+#!/bin/bash
+exec emacs -Q --batch -L $(dirname $0) --load $(dirname $0)/repl.el

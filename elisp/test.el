@@ -1,9 +1,4 @@
-(defun load-relative (file)
-  (let* ((current-file (or load-file-name buffer-file-name))
-         (current-file-directory (file-name-directory current-file)))
-    (load (expand-file-name file current-file-directory) nil t)))
-
-(load-relative "util.el")
+(require 'util)
 
 (defvar then (now))
 

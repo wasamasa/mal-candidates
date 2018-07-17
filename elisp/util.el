@@ -63,3 +63,5 @@
 
 (defun rect-size-set! (r size)
   (aset r 1 size))
+
+(provide 'util)
