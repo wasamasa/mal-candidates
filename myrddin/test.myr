@@ -1,0 +1,27 @@
+use std
+use util
+
+const main = {args: byte[:][:]
+    var then = util.now()
+    var dict: std.htab(byte[:], int)# = std.mkht()
+    std.htput(dict, "foo", 1)
+    std.htput(dict, "bar", 2)
+    var r1: util.rect = [.size=6]
+    std.put("Reading words...\n")
+    std.put("Words: {}\n", util.read_words("> "))
+    std.put("The answer: {}\n", util.the_answer())
+    util.make_greeter("World")()
+    std.put("Hostname: {}\n", util.hostname())
+    std.put("ARGV: {}\n", args[1:])
+    // NOTE: no exceptions
+    // NOTE: varargs, but no apply
+    std.put("Tokens: {}\n", util.tokenize("1 * (2 * 3) + 4"))
+    std.put("Keys: {}\n", util.keys(dict))
+    std.put("Rect r1 size: {}\n", r1.size)
+    std.put("Doubling rect size...\n")
+    r1.size *= 2
+    std.put("Rect r1 size: {}\n", r1.size)
+    // TODO: format this properly
+    std.put("Elapsed time: {}ms\n", util.now() - then)
+    std.exit(0)
+}

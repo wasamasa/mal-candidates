@@ -1,0 +1,76 @@
+use std
+use bio
+use regex
+
+pkg util =
+    const read_words: (prompt: byte[:] -> byte[:][:])
+    const the_answer: (-> int)
+    const make_greeter: (target: byte[:] -> (-> void))
+    const hostname: (-> byte[:])
+    const tokenize: (input: byte[:] -> byte[:][:])
+    generic keys: (ht: std.htab(@k, @v)# -> @k[:])
+    type rect = struct
+        size: int
+    ;;
+    const now: (-> flt64)
+;;
+
+var stdin: std.fd = 0
+var in: bio.file#
+
+const __init__ = {
+    in = bio.mkfile(stdin, bio.Rd)
+}
+
+const read_words = {prompt
+    var words = std.slalloc(0)
+    while true
+        std.put("{}", prompt)
+        match bio.readln(in)
+        | `std.Err `bio.Eof:
+            break
+        | `std.Err e:
+            std.fatal("error: {}\n", e)
+        | `std.Ok word:
+            words = std.slpush(&words, word)
+        ;;
+    ;;
+    -> words
+}
+
+const the_answer = {
+    -> 6 * 6 + 6
+}
+
+const make_greeter = {target
+    -> std.fndup({ ; std.put("Hello {}!\n", target) })
+}
+
+const hostname = {
+    var content = std.try(std.slurp("/etc/hostname"))
+    -> std.strrstrip(content)
+}
+
+const tokenize = {input
+    var re = std.try(regex.compile("\\s*([-+*/()]|\\d+)"))
+    var tokens = std.slalloc(0)
+    var i = 0
+    while true
+        match regex.search(re, input[i:])
+        | `std.Some matches:
+            i += matches[0].len
+            tokens = std.slpush(&tokens, matches[1])
+        | `std.None:
+            break
+        ;;
+    ;;
+    -> tokens
+}
+
+generic keys = {ht
+    -> std.htkeys(ht)
+}
+
+const now = {
+    -> (std.now(): flt64) / 1000.0
+}

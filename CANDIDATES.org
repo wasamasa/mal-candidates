@@ -256,7 +256,7 @@ textual patterns."
 In other words, it's the SNOBOL successor.  Unicon is the
 implementation to go for.
 
-*** TODO Myrddin
+*** TESTED Myrddin
 
 C with ADTs?
 
