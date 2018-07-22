@@ -1,0 +1,3 @@
+#!/bin/bash
+export PIKE_MODULE_PATH=$(dirname $0):$PIKE_MODULE_PATH
+exec pike $(dirname $0)/repl.pike

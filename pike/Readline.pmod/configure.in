@@ -1,0 +1,8 @@
+AC_INIT(readline.cmod)
+
+AC_MODULE_INIT()
+
+AC_CHECK_LIB(readline, readline)
+AC_CHECK_LIB(readline, add_history)
+
+AC_OUTPUT(Makefile,echo FOO >stamp-h )
