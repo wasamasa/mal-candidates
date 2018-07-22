@@ -8,6 +8,26 @@
 
 int plugin_is_GPL_compatible;
 
+static char* copy_lisp_string(emacs_env *env, emacs_value arg) {
+    ptrdiff_t len;
+    char *buf;
+
+    if (!env->copy_string_contents(env, arg, NULL, &len)) {
+        return NULL;
+    }
+
+    buf = malloc(len);
+    if (!buf) {
+        return NULL;
+    }
+
+    if (!env->copy_string_contents(env, arg, buf, &len)) {
+        return NULL;
+    }
+
+    return buf;
+}
+
 static void bind_function(emacs_env *env, const char *name, emacs_value Sfun) {
     emacs_value Qfset = env->intern(env, "fset");
     emacs_value Qsym = env->intern(env, name);
@@ -23,21 +43,12 @@ static void provide(emacs_env *env, const char *feature) {
 }
 
 static emacs_value Freadline(emacs_env *env, ptrdiff_t nargs, emacs_value args[], void *data) {
-    ptrdiff_t len;
     char *prompt, *line;
     emacs_value ret;
     emacs_value Qnil = env->intern(env, "nil");
 
-    if (!env->copy_string_contents(env, args[0], NULL, &len)) {
-        return Qnil;
-    }
-
-    prompt = malloc(len);
+    prompt = copy_lisp_string(env, args[0]);
     if (!prompt) {
-        return Qnil;
-    }
-
-    if (!env->copy_string_contents(env, args[0], prompt, &len)) {
         return Qnil;
     }
 
@@ -52,21 +63,12 @@ static emacs_value Freadline(emacs_env *env, ptrdiff_t nargs, emacs_value args[]
 }
 
 static emacs_value Fadd_history(emacs_env *env, ptrdiff_t nargs, emacs_value args[], void *data) {
-    ptrdiff_t len;
     char *line;
     emacs_value Qnil = env->intern(env, "nil");
     emacs_value Qt = env->intern(env, "t");
 
-    if (!env->copy_string_contents(env, args[0], NULL, &len)) {
-        return Qnil;
-    }
-
-    line = malloc(len);
+    line = copy_lisp_string(env, args[0]);
     if (!line) {
-        return Qnil;
-    }
-
-    if (!env->copy_string_contents(env, args[0], line, &len)) {
         return Qnil;
     }
 
