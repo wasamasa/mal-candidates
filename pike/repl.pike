@@ -1,4 +1,4 @@
-string history_file = sprintf("%s/.mal_history", getenv("HOME"));
+string history_file = combine_path(getenv("HOME"), ".mal_history");
 mixed space_re = Regexp.PCRE("^[ \t\n]*$");
 
 int is_blank(string s) {
@@ -8,8 +8,7 @@ int is_blank(string s) {
 void load_history() {
   catch {
     mixed f = Stdio.FILE(history_file);
-    string line;
-    while ((line = f->gets())) {
+    foreach(f->line_iterator(); int linenr; string line) {
       if (!is_blank(line)) {
         Readline.add_history(line);
       }
