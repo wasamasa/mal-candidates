@@ -1,0 +1,23 @@
+use std
+
+pkg libreadline =
+    extern const Creadline: (prompt: byte# -> byte#)
+    const readline: (prompt: byte[:] -> std.option(byte[:]))
+    extern const Cadd_history: (line: byte# -> void)
+    const add_history: (line: byte[:] -> void)
+;;
+
+const NULL = (0: byte#)
+
+const readline = {prompt
+    var ret = Creadline((std.fmt("{}\0", prompt): byte#))
+    if ret == NULL
+        -> `std.None
+    else
+        -> `std.Some std.cstrconvp(ret)
+    ;;
+}
+
+const add_history = {line
+    Cadd_history((std.fmt("{}\0", line): byte#))
+}

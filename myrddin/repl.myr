@@ -1,0 +1,71 @@
+use std
+use fileutil
+use bio
+use libreadline
+
+var history_file: byte[:]
+
+const __init__ = {
+    history_file = std.fmt("{}/.mal_history", fileutil.homedir())
+}
+
+const is_blank = {string: byte[:]
+    -> std.strstrip(string).len == 0
+}
+
+const load_history = {
+    match bio.open(history_file, bio.Rd)
+    | `std.Ok in:
+        while true
+            match bio.readln(in)
+            | `std.Err `bio.Eof:
+                break
+            | `std.Err e:
+                std.fatal("error: {}\n", e)
+            | `std.Ok line:
+                if !is_blank(line)
+                    libreadline.add_history(line)
+                ;;
+            ;;
+        ;;
+        bio.close(in)
+    | `std.Err e:
+    ;;
+}
+
+const append_line_to_file = {path: byte[:], line: byte[:]
+    match std.open(path, std.Owrite|std.Oappend|std.Ocreat)
+    | `std.Ok fd:
+        std.fput(fd, "{}\n", line)
+    | `std.Err e:
+        std.fatal("error: {}\n", e)
+    ;;
+}
+
+const add_to_history = {line: byte[:]
+    if !is_blank(line)
+        libreadline.add_history(line)
+        append_line_to_file(history_file, line)
+    ;;
+}
+
+const repl = {prompt: byte[:]
+    load_history()
+    while true
+        match libreadline.readline(prompt)
+        | `std.Some line:
+            if !is_blank(line)
+                std.put("{}\n", line)
+                add_to_history(line)
+            ;;
+        | `std.None:
+            break
+        ;;
+    ;;
+    std.put("\n")
+}
+
+const main = {
+    repl("> ")
+    std.exit(0)
+}

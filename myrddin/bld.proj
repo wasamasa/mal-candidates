@@ -1,2 +1,18 @@
-bin test = test.myr ;;
-lib util = util.myr ;;
+bin test =
+    test.myr
+    lib util
+;;
+
+lib util =
+    util.myr
+;;
+
+bin repl =
+    repl.myr
+    lib libreadline
+;;
+
+lib libreadline =
+    libreadline.myr
+    libreadline.glue.c
+;;
