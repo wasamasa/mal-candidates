@@ -1,7 +1,7 @@
-MYR = 6m
-MYRRT += /usr/lib/myr/_myrrt.o
+MYR ?= 6m
+MYRRT ?= /usr/lib/myr/_myrrt.o
 MYRFLAGS += -O .
-MUSE = muse
+MUSE ?= muse
 MUSELIBS += -lreadline
 LDFLAGS += --gc-sections -L/usr/lib/myr -L.
 ARFLAGS = -rcs
