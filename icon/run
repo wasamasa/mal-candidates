@@ -1,0 +1,3 @@
+#!/bin/bash
+export FPATH=$(dirname $0):$FPATH
+printf "foo\nbar\nbaz" | exec $(dirname $0)/test "$@"

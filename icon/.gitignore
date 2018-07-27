@@ -1,0 +1,5 @@
+*.so
+*.u1
+*.u2
+repl
+test

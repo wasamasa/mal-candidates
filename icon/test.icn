@@ -1,0 +1,26 @@
+link util
+
+procedure main(argv)
+    dict := table(&null)
+    dict["foo"] := 1
+    dict["bar"] := 2
+    r1 := rect(6)
+    then_ := now()
+    write("XXX: ", then_)
+    write("Reading words...")
+    write("Words: [", join(read_words("> "), ", "), "]")
+    write("The answer: ", the_answer())
+    greeter := make_greeter()
+    "World"@greeter
+    write("Hostname: ", hostname())
+    write("ARGV: [", join(argv, ", "), "]")
+    write("Error: ", fail_gracefully())
+    write("Sum: ", splat(sum, [1, 2, 3, 4]))
+    write("Tokens: [", join(tokenize("1 * (2 * 3) + 4"), ", "), "]")
+    write("Keys: [", join(keys(dict), ", "), "]")
+    write("Rect r1 size: ", r1.size)
+    write("Doubling rect size...")
+    r1.size *:= 2
+    write("Rect r1 size: ", r1.size)
+    write("Elapsed time: ", now() - then_, "ms")
+end
