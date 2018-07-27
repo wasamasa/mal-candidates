@@ -23,9 +23,8 @@
     (write-region (point-min) (point-max) path t)))
 
 (defun add-to-history-and-file (line)
-  (when (not (blankp line))
-    (add-history line)
-    (append-to-file history-file (format "%s\n" line))))
+  (add-history line)
+  (append-to-file history-file (format "%s\n" line)))
 
 (defun repl (prompt)
   (load-history)

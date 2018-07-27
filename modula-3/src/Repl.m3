@@ -1,9 +1,17 @@
 MODULE Repl EXPORTS Main;
 
-IMPORT IO, Rd, FileWr, Wr, Env, Text;
+IMPORT TextRd, Lex, IO, Rd, FileWr, Wr, Env, Text;
 FROM Readline IMPORT Readline, AddHistory;
 
 VAR historyfile := Env.Get("HOME") & "/.mal_history";
+
+PROCEDURE IsBlank(input: TEXT): BOOLEAN =
+  BEGIN
+    WITH rd = NEW(TextRd.T).init(input) DO
+      Lex.Skip(rd);
+      RETURN Rd.EOF(rd);
+    END;
+  END IsBlank;
 
 PROCEDURE LoadHistory() =
   VAR line: TEXT;
@@ -12,7 +20,9 @@ PROCEDURE LoadHistory() =
       IF rd # NIL THEN
         WHILE NOT Rd.EOF(rd) DO
           line := Rd.GetLine(rd);
-          AddHistory(line);
+          IF NOT IsBlank(line) THEN
+            AddHistory(line);
+          END;
         END;
       END
     END;
@@ -28,10 +38,8 @@ PROCEDURE AppendLine(path: TEXT; line: TEXT) =
 
 PROCEDURE AddToHistory(line: TEXT) =
   BEGIN
-    IF NOT Text.Empty(line) THEN
-      AddHistory(line);
-      AppendLine(historyfile, line);
-    END;
+    AddHistory(line);
+    AppendLine(historyfile, line);
   END AddToHistory;
 
 PROCEDURE Repl(prompt: TEXT) =
@@ -43,7 +51,7 @@ PROCEDURE Repl(prompt: TEXT) =
       line := Readline(prompt);
       IF line = NIL THEN
         done := TRUE
-      ELSIF NOT Text.Empty(line) THEN
+      ELSIF NOT IsBlank(line) THEN
         IO.Put(line & "\n");
         AddToHistory(line);
       END;

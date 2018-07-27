@@ -22,10 +22,8 @@ function load_history() {
 }
 
 function add_to_history(line) {
-    if (!is_blank(line)) {
-        rl_add_history(line);
-        file_append(history_file, line ~ '\n');
-    }
+    rl_add_history(line);
+    file_append(history_file, line ~ '\n');
 }
 
 function repl(prompt) {
@@ -35,8 +33,10 @@ function repl(prompt) {
        var line = rl_readline(prompt);
        if (not defined line)
            break
-       write(line ~ '\n');
-       add_to_history(line);
+       if (!is_blank(line)) {
+           write(line ~ '\n');
+           add_to_history(line);
+       }
     }
 }
 

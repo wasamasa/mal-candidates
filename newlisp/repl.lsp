@@ -26,11 +26,10 @@
       (close in))))
 
 (define (add-to-history line)
-  (when (not (blank? line))
-    (add_history line)
-    (let (out (open history-file "a"))
-      (write-line out line)
-      (close out))))
+  (add_history line)
+  (let (out (open history-file "a"))
+    (write-line out line)
+    (close out)))
 
 (define (repl prompt)
   (load-history)
@@ -38,7 +37,7 @@
     (while (not done)
       (let (line (readline prompt))
         (if (string? line)
-            (begin
+            (when (not (blank? line))
               (println line)
               (add-to-history line))
             (set 'done true))))))

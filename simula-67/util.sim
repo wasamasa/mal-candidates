@@ -87,17 +87,14 @@ EXTERNAL C PROCEDURE gnu_readline IS
    TEXT PROCEDURE gnu_readline(prompt); TEXT prompt;;
 
 TEXT PROCEDURE Readline(prompt); TEXT prompt;
-BEGIN TEXT buf;
-   buf:- gnu_readline(prompt);
-   Readline :- IF Eofp(buf) THEN "" ELSE buf;
-END;
+Readline :- gnu_readline(prompt);
 
 REF(CELL) PROCEDURE ReadWords(prompt); TEXT prompt;
 BEGIN BOOLEAN done; TEXT word; REF(CELL) result;
    result :- Cons(NONE, NONE);
    WHILE NOT done DO BEGIN
          word :- Readline(prompt);
-         IF word = "" THEN
+         IF Eofp(word) THEN
             done := TRUE
          ELSE
             result :- Cons(MakeText(Chomp(word)), result);

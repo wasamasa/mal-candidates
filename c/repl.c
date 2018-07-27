@@ -54,10 +54,8 @@ void append_line(char *path, char *line) {
 }
 
 void add_to_history(char *line) {
-    if (!is_blank(line)) {
-        add_history(line);
-        append_line(history_file, line);
-    }
+    add_history(line);
+    append_line(history_file, line);
 }
 
 void repl(char *prompt) {

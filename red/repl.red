@@ -39,24 +39,24 @@ add-history: routine [line [string!] /local len] [
 
 history-file: make file! rejoin [get-env "HOME" "/.mal_history"]
 
-load-history: function [] [
-    attempt [
-        foreach line read/lines history-file [
-            add-history line
-        ]
-    ]
-]
-
 blank?: function [input] [
     ws: charset reduce [space tab cr lf]
     parse input [any ws]
 ]
 
-add-to-history: function [line] [
-    if not blank? line [
-        add-history line
-        write/append history-file rejoin [line lf]
+load-history: function [] [
+    attempt [
+        foreach line read/lines history-file [
+            if not blank? line [
+                add-history line
+            ]
+        ]
     ]
+]
+
+add-to-history: function [line] [
+    add-history line
+    write/append history-file rejoin [line lf]
 ]
 
 repl: function [prompt] [
@@ -66,8 +66,10 @@ repl: function [prompt] [
         line: readline prompt
         line <> "q"
     ] [
-        print line
-        add-to-history line
+        if not blank? line [
+            print line
+            add-to-history line
+        ]
     ]
 ]
 

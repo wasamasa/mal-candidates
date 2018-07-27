@@ -4,7 +4,7 @@ IMPORT Text, TextSeq, TextIntTbl, Params, ETimer;
 
 VAR timer: ETimer.T;
 
-PROCEDURE Join (seq: TextSeq.T; sep: TEXT): TEXT =
+PROCEDURE Join(seq: TextSeq.T; sep: TEXT): TEXT =
   VAR printsep: BOOLEAN := FALSE;
   VAR wr: TextWr.T := NEW(TextWr.T).init();
   BEGIN

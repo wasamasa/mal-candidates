@@ -13,9 +13,8 @@
       (add-history line))))
 
 (defun add-to-history (line)
-  (when (not (blankp line))
-    (add-history line)
-    (file-append-lines history-file (list line))))
+  (add-history line)
+  (file-append-lines history-file (list line)))
 
 (defun repl (prompt)
   (load-history)

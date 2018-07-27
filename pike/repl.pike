@@ -17,10 +17,8 @@ void load_history() {
 }
 
 void add_to_history(string line) {
-  if (!is_blank(line)) {
-    Readline.add_history(line);
-    Stdio.append_file(history_file, sprintf("%s\n", line));
-  }
+  Readline.add_history(line);
+  Stdio.append_file(history_file, sprintf("%s\n", line));
 }
 
 void repl(string prompt) {

@@ -43,10 +43,8 @@ contains
   subroutine add_to_history(line)
     use iso_readline
     character(*), intent(in) :: line
-    if (.not. is_blank(line)) then
-       call add_history(line)
-       call append_line(history_file, line)
-    end if
+    call add_history(line)
+    call append_line(history_file, line)
   end subroutine add_to_history
 
   subroutine main(prompt)

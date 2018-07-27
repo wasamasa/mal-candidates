@@ -9,6 +9,20 @@ EXTERNAL C PROCEDURE add_history IS
 BEGIN
    TEXT historyfile;
 
+   BOOLEAN PROCEDURE IsWhitespace(c); CHARACTER c;
+   IsWhitespace := c = ' ' OR c = '!10!' OR c = '!9!';
+
+   BOOLEAN PROCEDURE IsBlank(line); TEXT Line;
+   BEGIN INTEGER i; BOOLEAN result;
+      i := 1;
+      result := TRUE;
+      WHILE i <= line.Length AND THEN result DO BEGIN
+            IF NOT IsWhitespace(CharAt(line, i)) THEN result := FALSE;
+            i := i + 1;
+         END;
+      IsBlank := result;
+   END;
+
    PROCEDURE AddHistory(line); TEXT line;
    COMMENT HACK: foreign function doesn't see the substring, but the
       main string unless it's copied...;
@@ -42,7 +56,7 @@ BEGIN
    END;
 
    PROCEDURE LoadHistory;
-   BEGIN TEXT buffer; INTEGER beg, i; BOOLEAN done;
+   BEGIN TEXT buffer, line; INTEGER beg, i; BOOLEAN done;
       IF FileExists(historyfile) THEN BEGIN
             buffer :- FileContent(historyfile);
             done := FALSE;
@@ -50,7 +64,9 @@ BEGIN
             WHILE NOT done DO BEGIN
                   i := FindChar(buffer, '!10!', beg);
                   IF i > 0 THEN BEGIN
-                        AddHistory(buffer.Sub(beg, i - beg));
+                        line :- buffer.Sub(beg, i - beg);
+                        IF NOT IsBlank(line) THEN
+                           AddHistory(buffer.Sub(beg, i - beg));
                         beg := i + 1;
                      END
                   ELSE done := TRUE
@@ -71,10 +87,8 @@ BEGIN
 
    PROCEDURE AddToHistory(line); TEXT line;
    BEGIN
-      IF line =/= "" THEN BEGIN
-            AddHistory(line);
-            AppendLine(historyfile, line);
-         END;
+      AddHistory(line);
+      AppendLine(historyfile, line);
    END;
 
    PROCEDURE Repl(prompt); TEXT prompt;
@@ -82,13 +96,14 @@ BEGIN
       LoadHistory;
       WHILE NOT done DO BEGIN
             line :- Readline(prompt);
-            IF line =/= "" THEN BEGIN
+            IF Eofp(line) THEN
+               done := TRUE
+            ELSE IF NOT IsBlank(line) THEN BEGIN
                   line :- Chomp(Line);
                   OutText(line);
                   OutImage;
                   AddToHistory(line);
-               END
-            ELSE done := TRUE;
+               END;
          END;
       OutImage;
    END;

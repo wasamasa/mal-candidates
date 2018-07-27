@@ -21,7 +21,6 @@ use FileSystem;
 var home: c_string;
 Sys.sys_getenv("HOME".c_str(), home);
 var history_file = home:string + "/.mal_history";
-writeln(history_file);
 
 proc load_history() {
   try! {
@@ -52,10 +51,8 @@ proc append_line(path: string, line: string) {
 }
 
 proc add_to_history(line: string) {
-  if (!is_blank(line)) {
-    add_history(line);
-    append_line(history_file, line);
-  }
+  add_history(line);
+  append_line(history_file, line);
 }
 
 proc repl(prompt: string) {

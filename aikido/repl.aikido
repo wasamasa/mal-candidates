@@ -50,10 +50,8 @@ function appendLine(line) {
 }
 
 function addToHistory(line) {
-  if (!isBlank(line)) {
-    addHistory(line)
-    appendLine(line)
-  }
+  addHistory(line)
+  appendLine(line)
 }
 
 function repl(prompt) {

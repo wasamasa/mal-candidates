@@ -2,6 +2,10 @@ import("readline");
 
 variable history_file = "$HOME/.mal_history"$;
 
+define is_blank(line) {
+    return string_match(line, "^[ \t\n]*$");
+}
+
 define load_history() {
     variable fp = fopen(history_file, "r");
     if (fp == NULL)
@@ -13,14 +17,12 @@ define load_history() {
 
     variable line;
     foreach line (lines)
-        rl_add_history(strtrim(line));
+        if (is_blank(line) == 0)
+            rl_add_history(strtrim(line));
 
     fclose(fp);
 }
 
-define is_blank(line) {
-    return string_match(line, "^[ \t\n]*$");
-}
 
 define append_line_to_history(line) {
     variable fp = fopen(history_file, "a");
@@ -32,10 +34,8 @@ define append_line_to_history(line) {
 }
 
 define add_to_history(line) {
-    if (not is_blank(line)) {
-        rl_add_history(line);
-        append_line_to_history(line);
-    }
+    rl_add_history(line);
+    append_line_to_history(line);
 }
 
 define repl(prompt) {
@@ -43,8 +43,10 @@ define repl(prompt) {
 
     variable line;
     while (line = rl_readline(prompt), line != NULL) {
-        message(line);
-        add_to_history(line);
+        if (is_blank(line) == 0) {
+            message(line);
+            add_to_history(line);
+        }
     }
 }
 

@@ -43,10 +43,8 @@ const append_line_to_file = {path: byte[:], line: byte[:]
 }
 
 const add_to_history = {line: byte[:]
-    if !is_blank(line)
-        libreadline.add_history(line)
-        append_line_to_file(history_file, line)
-    ;;
+    libreadline.add_history(line)
+    append_line_to_file(history_file, line)
 }
 
 const repl = {prompt: byte[:]

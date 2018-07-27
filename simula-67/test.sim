@@ -10,9 +10,6 @@ BEGIN
    r1 :- NEW RECT;
    r1.size := 6;
 
-   OutText(Chomp(""));
-   OutImage;
-
    OutText("Reading words...");
    OutImage;
    OutText("Words: ");

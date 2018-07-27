@@ -53,7 +53,7 @@ BEGIN
     Files.Set(r, f, 0);
     WHILE ~done DO
       ReadLine(r, f, line);
-      IF ~r.eof THEN
+      IF ~r.eof & ~IsBlank(line) THEN
         Readline.AddHistory(line);
       ELSE
         done := TRUE;
@@ -85,10 +85,8 @@ END AppendLine;
 
 PROCEDURE AddToHistory(line: Text);
 BEGIN
-  IF ~IsBlank(line) THEN
-    Readline.AddHistory(line);
-    AppendLine(historyfile, line);
-  END;
+  Readline.AddHistory(line);
+  AppendLine(historyfile, line);
 END AddToHistory;
 
 PROCEDURE Repl(prompt: Text);
