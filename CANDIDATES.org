@@ -125,9 +125,13 @@ http://ecere.org/tao.pdf
 
 ORLY?
 
+GC should be done via reference counting
+
 *** TODO COBOL
 
 YARLY
+
+https://supportline.microfocus.com/documentation/books/sx40/lrpubb.htm
 
 *** TODO BCPL
 
@@ -224,6 +228,7 @@ Purely symbolic Lisp, so no numbers...
 *** TODO Felix
 
 http://felix-lang.org/
+http://felix-documentation-master.readthedocs.io/en/latest/
 
 A powerful inliner compiling procedural/functional ML code to C++
 
@@ -683,6 +688,7 @@ http://setl.org/setl/bin/Linux-x86-64bit/
 http://www.settheory.com/
 http://www.hakank.org/setl/
 http://setl.org/setl/doc/setl-lib.html
+https://cs.nyu.edu/~bacon/setl-doc.html
 
 There's also setlX as alternative: https://randoom.org/Software/SetlX
 
