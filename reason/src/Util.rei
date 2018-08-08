@@ -1,0 +1,10 @@
+let readWords: string => list(string);
+let theAnswer: unit => int;
+let makeGreeter: string => unit => unit;
+let hostname: unit => option(string);
+let argv: unit => list(string);
+let failGracefully: unit => string;
+let tokenize: string => list(string);
+let keys: Hashtbl.t('k, 'v) => list('k);
+type rect = { mutable size: int };
+let now: unit => int;
