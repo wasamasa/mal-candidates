@@ -1,15 +1,18 @@
 #include <assert.h>
+#include <regex.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include <sys/types.h>
 
 #include <gc.h>
 
 #include "util.h"
 
 #define MAX_STRING_LENGTH 256
+#define REGEX_MATCHES 2
 
 struct form *make_lisp_string(char *s) {
     struct form *ret = GC_MALLOC(sizeof(struct form));
@@ -148,60 +151,24 @@ struct form *argv_(int argc, char **argv) {
     return reverse_list(args);
 }
 
-int is_space(char c) {
-    return (c == ' ' || c == '\t' || c == '\n');
-}
-
-int is_digit(char c) {
-    return (c >= '0' && c <= '9');
-}
-
-int is_special(char c) {
-    return (c == '+' || c == '-' || c == '*' ||
-            c == '/' || c == '(' || c == ')');
-}
-
-int read_whitespace(char *input) {
-    int i = 0;
-    while (is_space(*input++)) {
-        i++;
-    }
-    return i;
-}
-
-int read_digits(char *input) {
-    int i = 0;
-    while (is_digit(*input++)) {
-        i++;
-    }
-    return i;
-}
-
 struct form *tokenize(const char *input) {
-    struct form *tokens = make_lisp_nil();
     char *token, *s = (char *) input;
-    char c;
-    int len;
-    while ((c = *s)) {
-        if (is_space(c)) {
-            s += read_whitespace(s);
-        } else if (is_digit(c)) {
-            len = read_digits(s);
-            token = GC_MALLOC(len + 1);
-            strncpy(token, s, len);
-            tokens = cons(make_lisp_string(token), tokens);
-            s += len;
-        } else if (is_special(c)) {
-            len = 1;
-            token = GC_MALLOC(len + 1);
-            strncpy(token, s, len);
-            tokens = cons(make_lisp_string(token), tokens);
-            s++;
-        } else {
-            printf("unknown character: %c\n", c);
-            abort();
-        }
+    int token_start, token_end;
+    struct form *tokens = make_lisp_nil();
+    regex_t re;
+    regmatch_t matches[REGEX_MATCHES];
+    assert(regcomp(&re, "[[:space:]]*([-+*/()]|[0-9]+)", REG_EXTENDED) == 0);
+
+    while (regexec(&re, s, REGEX_MATCHES, matches, 0) == 0) {
+        token_start = matches[1].rm_so;
+        token_end = matches[1].rm_eo;
+        token = GC_MALLOC(token_end - token_start + 1);
+        strncpy(token, s + token_start, token_end - token_start);
+        tokens = cons(make_lisp_string(token), tokens);
+        s += matches[0].rm_eo;
     }
+
+    regfree(&re);
     return reverse_list(tokens);
 }
 
