@@ -54,4 +54,4 @@ let keys = (tbl) => {
 }
 
 type rect = { mutable size: int };
-let now = [%bs.raw {| function() { return Date.now() } |}];
+let now = () => Sys.time() *. 1000.0;

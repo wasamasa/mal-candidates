@@ -23,4 +23,4 @@ Printf.printf("Rect r1 size: %i\n", r1.size);
 Printf.printf("Doubling rect size...\n");
 r1.size = r1.size * 2;
 Printf.printf("Rect r1 size: %i\n", r1.size);
-Printf.printf("Elapsed time: %ims\n", Util.now() - then_);
+Printf.printf("Elapsed time: %.2fms\n", Util.now() -. then_);

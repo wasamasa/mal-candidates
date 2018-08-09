@@ -8,4 +8,4 @@ let die: unit => unit;
 let tokenize: string => list(string);
 let keys: Hashtbl.t('k, 'v) => list('k);
 type rect = { mutable size: int };
-let now: unit => int;
+let now: unit => float;
