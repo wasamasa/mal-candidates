@@ -4,6 +4,7 @@ let makeGreeter: string => unit => unit;
 let hostname: unit => option(string);
 let argv: unit => list(string);
 let failGracefully: unit => string;
+let die: unit => unit;
 let tokenize: string => list(string);
 let keys: Hashtbl.t('k, 'v) => list('k);
 type rect = { mutable size: int };

@@ -1,34 +1,5 @@
-let gets = [%bs.raw {|
-  function() {
-    const fs = require('fs');
-    const bufsz = 1;
-    const buf = Buffer.alloc(1);
-    const stdin = 0;
-    const offset = 0;
-    let data = '';
-    while (buf[0] !== 10 && fs.readSync(stdin, buf, offset, bufsz) !== 0) {
-      data += buf.toString();
-    }
-    return data;
-  }
-|}];
-
-let chomp = (s: string) => {
-  let len = String.length(s);
-  if (String.length(s) > 0 && s.[len - 1] == '\n') {
-    String.sub(s, 0, len - 1);
-  } else {
-    s;
-  };
-};
-
-let readWord = (prompt: string) => {
-  Printf.printf("%s", prompt);
-  switch (gets()) {
-  | "" => None;
-  | (input: string) => Some(chomp(input));
-  };
-};
+[@bs.module "./readline.js"] external readline: string => Js.nullable(string) = "";
+let readWord = (prompt: string) => Js.Nullable.toOption(readline(prompt));
 
 let readWords = (prompt) => {
   let rec loop = (acc) => {
@@ -58,14 +29,19 @@ let failGracefully = () => {
   };
 };
 
+let die = () => {
+  Printf.printf("This shouldn't happen\n");
+  exit(1);
+}
+
 let tokenize = (input: string) => {
-  let re = [%re "/ *([-+*\/()]|[0-9]+)/g"];
+  let re = [%re "/ *([-+*\\/()]|[0-9]+)/g"];
   let rec loop = (acc) => {
     switch (Js.Re.exec(input, re)) {
     | Some(m) =>
       switch (Js.Nullable.toOption(Js.Re.captures(m)[1])) {
       | Some(token) => loop([token, ...acc]);
-      | None => { Printf.printf("This shouldn't happen\n"); exit(1); };
+      | None => die();
       };
     | None => List.rev(acc);
     };

@@ -12,7 +12,7 @@ Printf.printf("The answer: %i\n", Util.theAnswer());
 Util.makeGreeter("World")();
 switch (Util.hostname()) {
 | Some(hostname) => Printf.printf("Hostname: %s\n", String.trim(hostname));
-| None => { Printf.printf("This shouldn't happen\n"); exit(1); };
+| None => Util.die();
 };
 Printf.printf("Argv: [%s]\n", String.concat(", ", Util.argv()));
 Printf.printf("Error: %s\n", Util.failGracefully());

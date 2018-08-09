@@ -11,5 +11,8 @@
   "license": "MPL-2.0",
   "devDependencies": {
     "bs-platform": "^4.0.3"
+  },
+  "dependencies": {
+    "ffi": "git+https://github.com/node-ffi/node-ffi.git"
   }
 }
