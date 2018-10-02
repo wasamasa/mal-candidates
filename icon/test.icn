@@ -6,7 +6,6 @@ procedure main(argv)
     dict["bar"] := 2
     r1 := rect(6)
     then_ := now()
-    write("XXX: ", then_)
     write("Reading words...")
     write("Words: [", join(read_words("> "), ", "), "]")
     write("The answer: ", the_answer())
