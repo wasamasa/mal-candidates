@@ -1,0 +1,5 @@
+*.u
+*.so
+uniclass.*
+test
+repl

@@ -1,0 +1,51 @@
+link io
+
+global history_file
+
+# io has readline already...
+procedure readline_(a[])
+    return (readline_ := pathload("libcfunc.so", "Creadline")) !a
+end
+
+procedure add_history(a[])
+    return (add_history := pathload("libcfunc.so", "Cadd_history")) !a
+end
+
+procedure is_blank(string)
+    return *trim(string, ' \t\n') = 0
+end
+
+procedure load_history()
+    if in := open(history_file) then {
+        while line := read(in) do
+            if not is_blank(line) then add_history(line)
+        close(in)
+    }
+end
+
+procedure append_line_to_file(path, line)
+    out := open(path, "a") | stop("cannot open file")
+    write(out, line)
+    close(out)
+end
+
+procedure add_to_history(line)
+    add_history(line)
+    append_line_to_file(history_file, line)
+end
+
+procedure repl(prompt)
+    load_history()
+    while line := readline_(prompt) do {
+        if not is_blank(line) then {
+            write(line)
+            add_to_history(line)
+        }
+    }
+    write()
+end
+
+procedure main()
+    history_file := getenv("HOME") || "/.mal_history"
+    repl("> ")
+end
