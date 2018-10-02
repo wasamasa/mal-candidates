@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [15/127]
+** Languages to implement MAL in [15/137]
 
 *** DONE Emacs Lisp
 
@@ -132,6 +132,7 @@ GC should be done via reference counting
 YARLY
 
 https://supportline.microfocus.com/documentation/books/sx40/lrpubb.htm
+https://github.com/TypeCobolTeam/TypeCobol
 
 *** TODO BCPL
 
@@ -194,6 +195,8 @@ I only know that Emacs supports it...
 *** TODO Dylan
 
 The other way Lisp could have evolved...
+
+https://opendylan.org/
 
 *** TESTED Newtonscript
 
@@ -330,6 +333,8 @@ doable: https://github.com/Juniper/libslax
 *** TODO Eiffel
 
 Contracts?
+
+http://smarteiffel.loria.fr/
 
 *** TODO Sather
 
@@ -498,6 +503,7 @@ http://miasap.se/obnc/
 Something sequences:
 
 http://www.rapideuphoria.com/
+https://openeuphoria.org/
 
 *** TODO Falcon
 
@@ -731,6 +737,70 @@ https://github.com/sirinath/fortress
 
 The UnQLite scripting language, available standalone:
 http://jx9.symisc.net/
+
+*** TODO Ballerina
+
+A language designed for networked programs. Seems to be
+turing-complete though.
+
+https://github.com/ballerina-platform/ballerina-lang
+
+*** TODO Om
+
+A concatenative language designed to be embedded in C++ programs with
+prefix syntax.
+
+https://sparist.github.io/Om/
+
+*** TODO AmbientTalk
+
+Somewhat like Smalltalk, Self and Java. Comes with interesting
+extensions.
+
+http://soft.vub.ac.be/amop/at/introduction
+
+*** TODO Lemon
+
+Yet another embedded scripting language.  At least it got closures...
+
+http://www.lemon-lang.org/
+
+*** TODO Dao
+
+The only reason I'm including this one is because its docs have funny
+design with too many colors and file sizes in kilobytes.
+
+http://daoscript.org/index.html
+
+*** TODO Logtalk
+
+A Prolog variant
+
+https://logtalk.org/
+
+*** TODO Miranda
+
+One of the influences on Haskell
+
+http://miranda.org.uk/
+
+*** TODO Nemerle
+
+The magic sauce for IntelliJ
+
+http://www.nemerle.org/About
+
+*** TODO Qore
+
+Claims to be enterprise-ready
+
+http://qore.org/
+
+*** TODO Skip
+
+Functional with a powerful type system.  Compiles to JS.
+
+http://skiplang.com/
 
 * Other stuff
 
