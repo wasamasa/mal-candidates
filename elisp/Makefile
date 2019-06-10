@@ -7,3 +7,6 @@ all: readline.so
 
 %.so: %.o
 	$(LD) -shared $(LDFLAGS) $(LDLIBS) -o $@ $<
+
+clean:
+	$(RM) readline.so
