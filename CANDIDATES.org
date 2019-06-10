@@ -10,7 +10,7 @@
   https://aur.archlinux.org/packages/quine-relay/ (implementations)
 - https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md
 
-** Languages to implement MAL in [15/137]
+** Languages to implement MAL in [15/141]
 
 *** DONE Emacs Lisp
 
@@ -802,6 +802,30 @@ Functional with a powerful type system.  Compiles to JS.
 
 http://skiplang.com/
 
+*** TODO Picat
+
+Practical Prolog
+
+http://picat.retina.ufsc.br/picat_guide/
+
+*** TODO Volt
+
+Higher-level systems language, implemented in D.
+
+https://github.com/VoltLang/Volta
+
+*** TODO Emojicode
+
+High-level, strongly typed, uses lots of emojis.
+
+https://www.emojicode.org/
+
+*** TODO Crack
+
+I wonder what they were smoking.
+
+http://www.crack-lang.org/
+
 * Other stuff
 
 A logical continuation to MAL would be building a byte-code
@@ -815,3 +839,5 @@ Resources:
 - http://peter.michaux.ca/articles/scheme-from-scratch-introduction
 - http://blog.felixangell.com/blog/virtual-machine-in-c
 - http://www.craftinginterpreters.com/ (incomplete)
+- https://justinmeiners.github.io/lc3-vm/
+- https://bernsteinbear.com/blog/bytecode-interpreters/
